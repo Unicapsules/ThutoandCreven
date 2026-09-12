@@ -16,40 +16,42 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  /* paper */
-  --paper:#FBF7F4;
+  /* paper — plain white, no tint */
+  --paper:#FFFFFF;
   --paper-2:#FFFFFF;
-  --paper-warm:#F6EFEA;
 
-  /* ink */
-  --ink:#2A1D1E;
-  --ink-dim:rgba(42,29,30,.62);
-  --ink-faint:rgba(42,29,30,.50);
-  --ink-whisper:rgba(42,29,30,.13);
-  --hair:rgba(42,29,30,.09);
+  /* ink — black, and the dimmer tiers stay genuinely dark */
+  --ink:#0B0B0B;
+  --ink-dim:#242424;
+  --ink-faint:#3A3A3A;
+  --ink-whisper:rgba(11,11,11,.22);
+  --hair:rgba(11,11,11,.13);
 
   /* rose */
   --oxblood:#8C1526;
-  --claret:#A72438;
+  --claret:#A0101F;
   --rose:#B01226;
-  --rose-soft:#D4505F;
-  --blush:#F6E4E2;
-  --blush-air:rgba(176,18,38,.10);
+  --rose-soft:#C4404E;
 
-  /* gold */
-  --gold:#A3823F;
-  --gold-dim:rgba(185,154,99,.72);
-  --gold-hair:rgba(185,154,99,.30);
+  /* gold — darkened so small caps stay readable on white */
+  --gold:#8A6A28;
+  --gold-dim:#8A6A28;
+  --gold-hair:rgba(138,106,40,.34);
 }
 
-html{scroll-behavior:smooth;overflow-x:hidden;}
+/* Scroll fix — `overflow-x:hidden` on <html> makes iOS Safari refuse to
+   scroll vertically until the user pinch-zooms. `clip` on the body alone
+   contains the decorative sprays without creating a scroll container. */
+html{scroll-behavior:smooth;}
 body{
   background:var(--paper);
   color:var(--ink);
   font-family:'Cormorant Garamond',serif;
-  font-weight:300;
-  line-height:1.85;
-  overflow-x:hidden;
+  font-weight:400;
+  font-size:18px;
+  line-height:1.8;
+  overflow-x:clip;
+  -webkit-text-size-adjust:100%;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
@@ -57,47 +59,22 @@ body{
 /* ═══════ TYPE SYSTEM ═══════ */
 .caps{
   font-family:'Cormorant',serif;
-  font-weight:500;
+  font-weight:600;
   text-transform:uppercase;
-  letter-spacing:.42em;
+  letter-spacing:.24em;
 }
-.caps-sm{font-size:9.5px;}
-.caps-md{font-size:11px;}
-
-/* ═══════ ATMOSPHERE ═══════ */
-.aura{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
-.aura-1{
-  top:-220px;left:-200px;width:620px;height:620px;
-  background:radial-gradient(circle,rgba(196,23,43,.16) 0%,transparent 64%);
-  animation:swell 20s ease-in-out infinite;
-}
-.aura-2{
-  bottom:-200px;right:-200px;width:540px;height:540px;
-  background:radial-gradient(circle,rgba(185,154,99,.22) 0%,transparent 64%);
-  animation:swell 26s ease-in-out infinite reverse;
-}
-@keyframes swell{
-  0%,100%{opacity:.55;transform:scale(1);}
-  50%    {opacity:1;transform:scale(1.12);}
-}
-.grain{
-  position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.vignette{
-  position:fixed;inset:0;pointer-events:none;z-index:2;
-  background:radial-gradient(ellipse at center,transparent 48%,rgba(163,110,110,.09) 100%);
-}
+.caps-sm{font-size:13px;}
+.caps-md{font-size:15px;}
 
 /* ═══════ ROSE SPRAYS ═══════ */
 .spray{position:absolute;pointer-events:none;z-index:0;}
-.spray-hero-tl{top:-42px;left:-70px;width:clamp(210px,40vw,340px);opacity:.72;
+.spray-hero-tl{top:-42px;left:-70px;width:clamp(210px,40vw,340px);opacity:1;
   animation:sway 14s ease-in-out infinite;}
-.spray-hero-br{bottom:-58px;right:-74px;width:clamp(200px,38vw,320px);opacity:.66;
+.spray-hero-br{bottom:-58px;right:-74px;width:clamp(200px,38vw,320px);opacity:.95;
   transform:scaleX(-1);animation:sway 17s ease-in-out infinite reverse;}
 .spray-foot{top:-56px;left:50%;width:clamp(220px,52vw,330px);
-  transform:translateX(-50%);opacity:.78;}
-.spray-side{width:clamp(120px,26vw,200px);opacity:.6;z-index:0;}
+  transform:translateX(-50%);opacity:.95;}
+.spray-side{width:clamp(120px,26vw,200px);opacity:.85;z-index:0;}
 .spray-quote{top:6px;right:-46px;}
 .spray-rsvp{bottom:10px;left:-52px;transform:scaleX(-1);}
 .spray-card-a{position:absolute;top:-14px;left:-18px;width:118px;opacity:.92;z-index:1;pointer-events:none;}
@@ -153,7 +130,7 @@ body{
 
 /* ═══════ HERO ═══════ */
 .hero{
-  position:relative;min-height:100vh;z-index:3;
+  position:relative;min-height:100svh;z-index:3;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   text-align:center;padding:100px 32px 120px;
@@ -274,7 +251,7 @@ body{
 .display.it{font-style:italic;}
 
 .body-copy{
-  font-size:clamp(15px,3.4vw,18px);
+  font-size:clamp(17px,4vw,20px);
   font-weight:400;
   color:var(--ink-dim);
   line-height:2;margin-top:22px;
@@ -320,18 +297,16 @@ body{
   position:relative;width:100%;max-width:500px;
   margin-top:14px;padding:56px 24px 50px;
   overflow:hidden;
-  background:
-    radial-gradient(ellipse at 50% 40%,rgba(246,228,226,.9) 0%,rgba(255,255,255,0) 68%),
-    var(--paper-2);
+  background:var(--paper-2);
   border-top:1px solid var(--gold-hair);
   border-bottom:1px solid var(--gold-hair);
-  box-shadow:0 22px 60px -34px rgba(140,21,38,.28);
+  box-shadow:none;
 }
 .date-stage > *:not(svg){position:relative;z-index:2;}
 .d-month{
   font-family:'Cormorant',serif;
-  font-weight:500;font-size:clamp(13px,3.2vw,17px);
-  letter-spacing:.6em;text-transform:uppercase;
+  font-weight:500;font-size:clamp(15px,3.6vw,19px);
+  letter-spacing:.42em;text-transform:uppercase;
   color:var(--claret);
   margin-bottom:10px;padding-left:.6em;
 }
@@ -344,8 +319,8 @@ body{
 }
 .d-year{
   font-family:'Cormorant',serif;
-  font-weight:400;font-size:clamp(15px,3.6vw,21px);
-  letter-spacing:.72em;color:var(--gold);
+  font-weight:400;font-size:clamp(17px,4vw,22px);
+  letter-spacing:.5em;color:var(--gold);
   margin-top:14px;padding-left:.72em;
 }
 .d-strip{
@@ -355,7 +330,7 @@ body{
 .d-chip{
   padding:0 24px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:10px;letter-spacing:.34em;
+  font-size:13px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--ink-dim);
 }
 .d-chip + .d-chip{border-left:1px solid var(--ink-whisper);}
@@ -372,7 +347,7 @@ body{
   margin-top:20px;padding:11px 24px;
   border:1px solid var(--ink-whisper);
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-faint);
   transition:border-color .6s,color .6s;
 }
@@ -381,10 +356,10 @@ body{
 /* ═══════ COUNTDOWN ═══════ */
 .cd-grid{
   display:flex;max-width:460px;width:100%;margin-top:44px;
-  background:linear-gradient(180deg,rgba(246,228,226,.75),rgba(255,255,255,0) 72%),var(--paper-2);
+  background:var(--paper-2);
   border-top:1px solid var(--gold-hair);
   border-bottom:1px solid var(--gold-hair);
-  box-shadow:0 18px 50px -36px rgba(140,21,38,.3);
+  box-shadow:none;
 }
 .cd-unit{flex:1;padding:34px 8px;text-align:center;position:relative;}
 .cd-unit + .cd-unit::before{
@@ -400,7 +375,7 @@ body{
 .cd-num.tick{opacity:.42;}
 .cd-lbl{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.34em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--gold);margin-top:15px;display:block;
 }
 
@@ -416,20 +391,20 @@ body{
 .dc-caption{
   color:var(--gold);margin-top:18px;margin-bottom:48px;
 }
-.swatches{display:flex;gap:1px;margin-bottom:46px;}
+.swatches{display:flex;gap:4px;margin-bottom:52px;}
 .sw{
   width:64px;height:82px;position:relative;
   transition:transform .8s cubic-bezier(.16,1,.3,1);
-  box-shadow:0 12px 30px -20px rgba(42,29,30,.5);
+  box-shadow:0 10px 26px -18px rgba(11,11,11,.45);
 }
 .sw:hover{transform:translateY(-7px);}
 .sw-black{background:#151011;}
-.sw-white{background:#FFFFFF;border:1px solid rgba(42,29,30,.14);}
+.sw-white{background:#FFFFFF;border:1px solid rgba(11,11,11,.30);}
 .sw-red{background:var(--oxblood);}
 .sw-lbl{
-  position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-faint);white-space:nowrap;
 }
 .dc-desc{
@@ -448,25 +423,25 @@ body{
 .rsvp-label{
   display:block;margin-bottom:12px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.36em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--gold);
 }
 .rsvp-input{
   width:100%;background:transparent;
   border:none;border-bottom:1px solid var(--ink-whisper);
   color:var(--ink);
-  font-family:'Cormorant Garamond',serif;font-weight:400;
-  font-size:19px;padding:6px 0 13px;
+  font-family:'Cormorant Garamond',serif;font-weight:500;
+  font-size:21px;padding:6px 0 14px;
   outline:none;transition:border-color .6s;
 }
-.rsvp-input::placeholder{color:rgba(42,29,30,.24);font-style:italic;}
+.rsvp-input::placeholder{color:#6E6E6E;font-style:italic;}
 .rsvp-input:focus{border-color:var(--claret);}
 
 .rsvp-lock{
   display:flex;align-items:center;gap:11px;
   margin-bottom:36px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 
@@ -476,7 +451,7 @@ body{
   border:1px solid var(--claret);
   cursor:pointer;overflow:hidden;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:10px;letter-spacing:.42em;text-transform:uppercase;
+  font-size:13px;letter-spacing:.26em;text-transform:uppercase;
   transition:color .7s,border-color .7s;
 }
 .rsvp-btn span{position:relative;z-index:2;padding-left:.42em;}
@@ -493,7 +468,7 @@ body{
 .gc-note{
   text-align:center;margin-top:28px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 .gc-note span{
@@ -508,7 +483,7 @@ body{
   background:none;border:none;cursor:pointer;
   border-bottom:1px solid transparent;padding:6px 0;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-faint);
   transition:color .5s,border-color .5s;
 }
@@ -534,11 +509,11 @@ body{
 }
 .gh-title{
   font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-style:italic;font-size:21px;color:var(--ink);
+  font-weight:400;font-style:italic;font-size:23px;color:var(--ink);
 }
 .gh-count{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--gold);
 }
 .guest-row{
@@ -551,24 +526,24 @@ body{
 @keyframes rowOut{to{opacity:0;transform:translateX(26px);max-height:0;padding:0;}}
 .gr-left{display:flex;align-items:baseline;gap:15px;text-align:left;}
 .gr-idx{
-  font-family:'Cormorant',serif;font-size:10px;
-  letter-spacing:.14em;color:var(--gold);min-width:22px;
+  font-family:'Cormorant',serif;font-size:13px;
+  letter-spacing:.1em;color:var(--gold);min-width:26px;
 }
 .gr-name{
   font-family:'Cormorant Garamond',serif;
-  font-weight:400;font-size:18px;color:var(--ink);
+  font-weight:500;font-size:19px;color:var(--ink);
 }
 .gr-actions{display:flex;align-items:center;gap:16px;}
 .gr-guests{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-faint);white-space:nowrap;
 }
 .gr-edit,.gr-del{
   background:none;border:none;cursor:pointer;padding:4px 0;
   border-bottom:1px solid transparent;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.24em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-faint);
   transition:color .45s,border-color .45s;
 }
@@ -576,7 +551,7 @@ body{
 .gr-del:hover,.gr-del.confirm{color:var(--claret);border-color:rgba(167,36,56,.5);}
 .guest-empty{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:16px;color:var(--ink-faint);padding:28px 0;
+  font-size:18px;color:var(--ink-faint);padding:28px 0;
 }
 .guest-actions{display:flex;gap:12px;margin-top:26px;}
 .g-btn{
@@ -584,24 +559,24 @@ body{
   border:1px solid var(--ink-whisper);color:var(--ink-faint);
   padding:14px 10px;cursor:pointer;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.28em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   transition:border-color .5s,color .5s;
 }
 .g-btn:hover{border-color:var(--rose-soft);color:var(--claret);}
 .guest-note{
   margin-top:22px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.24em;text-transform:uppercase;
-  color:rgba(42,29,30,.28);line-height:2.2;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);line-height:2.1;
 }
 
 .editing-flag{
   display:none;align-items:center;gap:11px;
   margin-bottom:28px;padding:13px 18px;
   border:1px solid rgba(167,36,56,.28);
-  background:rgba(246,228,226,.6);
+  background:#FFF;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--claret);
 }
 .editing-flag.show{display:flex;}
@@ -621,7 +596,7 @@ body{
 }
 .suc-sub{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.34em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 .venue-reveal-box{
@@ -631,7 +606,7 @@ body{
 }
 .vr-label{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.36em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;
   color:var(--gold);margin-bottom:20px;
 }
 .vr-venue{
@@ -643,12 +618,12 @@ body{
 .vr-note{
   margin-top:16px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--ink-faint);line-height:2;
 }
 .suc-msg{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 
@@ -659,7 +634,7 @@ body{
   background:var(--oxblood);color:var(--paper-2);
   text-decoration:none;border:1px solid var(--oxblood);
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;
   transition:background .5s,color .5s;
 }
 .wa-btn svg{width:17px;height:17px;fill:currentColor;flex:none;}
@@ -669,14 +644,14 @@ body{
 .wa-btn.sent{background:transparent;color:var(--ink-faint);border-color:var(--ink-whisper);}
 .wa-note{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--ink-faint);line-height:2;margin-bottom:26px;
 }
 .rsvp-error{
   display:none;margin-bottom:22px;padding:12px 16px;
-  border:1px solid rgba(167,36,56,.34);background:rgba(246,228,226,.7);
+  border:1px solid rgba(167,36,56,.34);background:#FFF;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--claret);line-height:1.9;
 }
 .rsvp-error.show{display:block;}
@@ -691,17 +666,17 @@ body{
 .suc-contact:hover{padding-left:10px;color:var(--claret);}
 .sc-who{
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;
+  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--ink-faint);
 }
-.sc-num{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:20px;}
+.sc-num{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;}
 
 /* ═══════ FOOTER ═══════ */
 footer{
   position:relative;z-index:3;overflow:hidden;
   padding:120px 34px 100px;text-align:center;
   border-top:1px solid var(--gold-hair);
-  background:linear-gradient(180deg,rgba(246,228,226,.55),rgba(255,255,255,0) 60%);
+  background:var(--paper-2);
 }
 footer > *:not(.spray){position:relative;z-index:2;}
 .foot-names{
@@ -714,8 +689,8 @@ footer > *:not(.spray){position:relative;z-index:2;}
 .foot-quote{
   margin-top:24px;
   font-family:'Cormorant',serif;font-weight:500;
-  font-size:8px;letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(42,29,30,.26);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);
 }
 
 /* ═══════ REVEAL ═══════ */
@@ -739,16 +714,16 @@ footer > *:not(.spray){position:relative;z-index:2;}
 @media(max-width:440px){
   .section{padding:82px 26px;}
   .d-number{font-size:clamp(92px,26vw,150px);}
-  .spray-side{opacity:.4;}
+  .spray-side{opacity:.6;}
   .spray-quote{right:-58px;}
   .spray-rsvp{left:-62px;}
   .spray-card-a{width:86px;}
   .spray-card-b{width:76px;}
   .sw{width:54px;height:70px;}
-  .d-chip{padding:0 16px;letter-spacing:.24em;}
-  .caps{letter-spacing:.32em;}
-  .spray-hero-tl{top:-24px;left:-56px;opacity:.6;}
-  .spray-hero-br{bottom:-34px;right:-58px;opacity:.55;}
+  .d-chip{padding:0 14px;letter-spacing:.14em;font-size:12px;}
+  .caps{letter-spacing:.18em;}
+  .spray-hero-tl{top:-24px;left:-56px;opacity:.95;}
+  .spray-hero-br{bottom:-34px;right:-58px;opacity:.9;}
   .ornament{max-width:190px;}
 }
 </style>
@@ -758,97 +733,183 @@ footer > *:not(.spray){position:relative;z-index:2;}
 <!-- ═══════════ ROSE ARTWORK DEFINITIONS ═══════════ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <radialGradient id="gPetalOuter" cx="42%" cy="34%" r="70%">
-      <stop offset="0%"   stop-color="#E14B5A"/>
-      <stop offset="52%"  stop-color="#C0182C"/>
-      <stop offset="100%" stop-color="#7E0C1B"/>
+    <!-- Each petal is lit at its own tip and falls into shadow at its base.
+         gradientUnits are per-path, so one gradient serves every petal. -->
+    <radialGradient id="gO1" cx="50%" cy="14%" r="86%">
+      <stop offset="0%"   stop-color="#F06174"/>
+      <stop offset="30%"  stop-color="#D42539"/>
+      <stop offset="68%"  stop-color="#A20F20"/>
+      <stop offset="100%" stop-color="#63080F"/>
     </radialGradient>
-    <radialGradient id="gPetalInner" cx="44%" cy="36%" r="68%">
-      <stop offset="0%"   stop-color="#C41E31"/>
-      <stop offset="55%"  stop-color="#8C1526"/>
-      <stop offset="100%" stop-color="#500911"/>
+    <radialGradient id="gO2" cx="50%" cy="16%" r="84%">
+      <stop offset="0%"   stop-color="#DC4356"/>
+      <stop offset="34%"  stop-color="#BC1A2D"/>
+      <stop offset="72%"  stop-color="#8C0D1C"/>
+      <stop offset="100%" stop-color="#54060D"/>
     </radialGradient>
-    <radialGradient id="gPetalOuterD" cx="42%" cy="34%" r="70%">
-      <stop offset="0%"   stop-color="#B31A2C"/>
-      <stop offset="52%"  stop-color="#8C1526"/>
-      <stop offset="100%" stop-color="#520A13"/>
+    <radialGradient id="gO3" cx="50%" cy="18%" r="82%">
+      <stop offset="0%"   stop-color="#C22C3E"/>
+      <stop offset="38%"  stop-color="#9E1122"/>
+      <stop offset="76%"  stop-color="#730A17"/>
+      <stop offset="100%" stop-color="#41040A"/>
     </radialGradient>
-    <radialGradient id="gPetalInnerD" cx="44%" cy="36%" r="68%">
-      <stop offset="0%"   stop-color="#8C1526"/>
-      <stop offset="55%"  stop-color="#66101C"/>
-      <stop offset="100%" stop-color="#38050D"/>
+    <!-- darker cultivar -->
+    <radialGradient id="gD1" cx="50%" cy="14%" r="86%">
+      <stop offset="0%"   stop-color="#C43244"/>
+      <stop offset="30%"  stop-color="#9C1122"/>
+      <stop offset="68%"  stop-color="#710915"/>
+      <stop offset="100%" stop-color="#3D030A"/>
     </radialGradient>
-    <linearGradient id="gLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#8C9C7E"/>
-      <stop offset="100%" stop-color="#5B6B50"/>
+    <radialGradient id="gD2" cx="50%" cy="16%" r="84%">
+      <stop offset="0%"   stop-color="#A81C2E"/>
+      <stop offset="38%"  stop-color="#7E0C1A"/>
+      <stop offset="76%"  stop-color="#560711"/>
+      <stop offset="100%" stop-color="#2E0207"/>
+    </radialGradient>
+    <radialGradient id="gD3" cx="50%" cy="18%" r="82%">
+      <stop offset="0%"   stop-color="#8C1122"/>
+      <stop offset="40%"  stop-color="#660814"/>
+      <stop offset="100%" stop-color="#240206"/>
+    </radialGradient>
+
+    <!-- the rolled outer edge of a petal catches the light -->
+    <linearGradient id="gRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FF9AA4" stop-opacity=".34"/>
+      <stop offset="100%" stop-color="#FFC9CE" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="gStem" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"   stop-color="#7E8E72"/>
-      <stop offset="100%" stop-color="#5B6B50"/>
+    <!-- the throat of the flower sinks into shadow -->
+    <radialGradient id="gThroat" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#2E0206" stop-opacity=".82"/>
+      <stop offset="52%"  stop-color="#4A040C" stop-opacity=".34"/>
+      <stop offset="100%" stop-color="#4A040C" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="gLeaf" x1="6%" y1="0%" x2="94%" y2="100%">
+      <stop offset="0%"   stop-color="#6E8060"/>
+      <stop offset="55%"  stop-color="#4E6142"/>
+      <stop offset="100%" stop-color="#36462D"/>
     </linearGradient>
+    <linearGradient id="gStem" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#5E7050"/>
+      <stop offset="50%"  stop-color="#43563A"/>
+      <stop offset="100%" stop-color="#2F3E28"/>
+    </linearGradient>
+
+    <filter id="fBloom" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#3D040B" flood-opacity=".42"/>
+    </filter>
   </defs>
 
-  <!-- Blush rose bloom -->
+  <!-- ── Garden rose, open bloom ───────────────────────────────
+       Three rings of cupped petals, each ring smaller, darker and
+       rotated off the one behind it, over a shadowed throat and a
+       curled core. -->
   <symbol id="rose" viewBox="0 0 100 100">
-    <g fill="url(#gPetalOuter)">
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(72 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(144 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(216 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(288 50 50)"/>
+    <g filter="url(#fBloom)">
+      <!-- outer ring -->
+      <g fill="url(#gO1)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(60 50 50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(120 50 50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(180 50 50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(240 50 50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(300 50 50)"/>
+      </g>
+      <!-- rolled rims on the outer ring -->
+      <g fill="url(#gRim)">
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z"/>
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z" transform="rotate(120 50 50)"/>
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z" transform="rotate(240 50 50)"/>
+      </g>
+      <!-- middle ring -->
+      <g fill="url(#gO2)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(32 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(104 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(176 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(248 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(320 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+      </g>
+      <!-- throat shadow -->
+      <circle cx="50" cy="50" r="30" fill="url(#gThroat)"/>
+      <!-- inner ring -->
+      <g fill="url(#gO3)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(14 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(104 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(194 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(284 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+      </g>
+      <!-- curled core -->
+      <path d="M50 57C43 57 37 51 37 44C37 36 44 31 51 31C60 31 67 38 67 47C67 57 58 64 48 64" fill="none" stroke="#4C060F" stroke-width="1.6" stroke-linecap="round" opacity=".28"/>
+      <g fill="url(#gO3)">
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z"/>
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z" transform="rotate(128 50 48) translate(50 48) scale(.78) translate(-50 -48)"/>
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z" transform="rotate(250 50 48) translate(50 48) scale(.62) translate(-50 -48)"/>
+      </g>
+      <path d="M49 49C47 47 47 44 49 43C52 42 54 44 54 46C54 49 52 50 49 49Z" fill="#2E0308" opacity=".7"/>
     </g>
-    <g fill="url(#gPetalInner)">
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(36 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(108 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(180 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(252 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(324 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-    </g>
-    <path d="M50 62c-6.6 0-12-5.4-12-12s5.4-12 12-12 14 5.4 14 14-6.3 16-16 16"
-          fill="none" stroke="#8C1526" stroke-width="2.1" stroke-linecap="round" opacity=".5"/>
-    <circle cx="50" cy="50" r="3.4" fill="#7C1223" opacity=".55"/>
   </symbol>
 
-  <!-- Deeper rose bloom -->
+  <!-- ── Same bloom, darker cultivar ── -->
   <symbol id="rose-deep" viewBox="0 0 100 100">
-    <g fill="url(#gPetalOuterD)">
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(72 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(144 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(216 50 50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(288 50 50)"/>
+    <g filter="url(#fBloom)">
+      <g fill="url(#gD1)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(60 50 50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(120 50 50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(180 50 50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(240 50 50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(300 50 50)"/>
+      </g>
+      <g fill="url(#gRim)" opacity=".3">
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z"/>
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z" transform="rotate(120 50 50)"/>
+        <path d="M21 23C25 10 37 4 50 4C63 4 76 11 79 24C70 14 61 10 50 10C39 10 29 14 21 23Z" transform="rotate(240 50 50)"/>
+      </g>
+      <g fill="url(#gD2)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(32 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(104 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(176 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(248 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(320 50 50) translate(50 50) scale(.72) translate(-50 -50)"/>
+      </g>
+      <circle cx="50" cy="50" r="30" fill="url(#gThroat)"/>
+      <g fill="url(#gD3)">
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(14 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(104 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C30 57 17 40 21 23C25 10 37 4 50 4C63 4 76 11 79 24C83 41 70 57 50 61Z" transform="rotate(194 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+        <path d="M50 61C31 56 18 39 23 22C27 10 40 3 52 5C65 8 77 18 78 31C79 46 68 57 50 61Z" transform="rotate(284 50 50) translate(50 50) scale(.46) translate(-50 -50)"/>
+      </g>
+      <path d="M50 57C43 57 37 51 37 44C37 36 44 31 51 31C60 31 67 38 67 47C67 57 58 64 48 64" fill="none" stroke="#2C0208" stroke-width="1.6" stroke-linecap="round" opacity=".3"/>
+      <g fill="url(#gD3)">
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z"/>
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z" transform="rotate(128 50 48) translate(50 48) scale(.78) translate(-50 -48)"/>
+        <path d="M50 56C44 54 40 49 42 43C44 37 52 36 56 40C61 45 58 53 50 56Z" transform="rotate(250 50 48) translate(50 48) scale(.62) translate(-50 -48)"/>
+      </g>
+      <path d="M49 49C47 47 47 44 49 43C52 42 54 44 54 46C54 49 52 50 49 49Z" fill="#180104" opacity=".78"/>
     </g>
-    <g fill="url(#gPetalInnerD)">
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(36 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(108 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(180 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(252 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(324 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
-    </g>
-    <path d="M50 62c-6.6 0-12-5.4-12-12s5.4-12 12-12 14 5.4 14 14-6.3 16-16 16"
-          fill="none" stroke="#560B16" stroke-width="2.1" stroke-linecap="round" opacity=".55"/>
-    <circle cx="50" cy="50" r="3.4" fill="#4A0B14" opacity=".6"/>
   </symbol>
 
-  <!-- Bud -->
+  <!-- ── Bud, still wrapped in its sepals ── -->
   <symbol id="bud" viewBox="0 0 100 100">
-    <path d="M50 14c14 6 22 20 22 34 0 18-10 30-22 30S28 66 28 48c0-14 8-28 22-34z" fill="url(#gPetalOuter)"/>
-    <path d="M50 20c8 6 12 17 12 28s-5 20-12 24c-7-4-12-13-12-24s4-22 12-28z" fill="url(#gPetalInner)" opacity=".85"/>
-    <path d="M30 56c6 14 14 20 20 22-10 2-20-4-24-14-2-5 0-8 4-8z" fill="url(#gLeaf)" opacity=".9"/>
-    <path d="M70 56c-6 14-14 20-20 22 10 2 20-4 24-14 2-5 0-8-4-8z" fill="url(#gLeaf)" opacity=".9"/>
+    <g filter="url(#fBloom)">
+      <path d="M50 10C66 18 73 33 73 48C73 68 63 82 50 82C37 82 27 68 27 48C27 33 34 18 50 10Z" fill="url(#gO2)"/>
+      <path d="M50 14C58 22 63 34 63 47C63 63 57 74 50 78C46 72 43 60 43 47C43 32 46 21 50 14Z" fill="url(#gO1)" opacity=".9"/>
+      <path d="M50 14C58 22 63 34 63 47C63 63 57 74 50 78C55 68 57 57 57 46C57 33 55 22 50 14Z" fill="url(#gO3)" opacity=".85"/>
+      <path d="M27 52C33 70 42 79 51 83C38 87 26 79 22 66C20 57 23 51 27 52Z" fill="url(#gLeaf)"/>
+      <path d="M73 52C67 70 58 79 49 83C62 87 74 79 78 66C80 57 77 51 73 52Z" fill="url(#gLeaf)"/>
+      <path d="M50 82C50 88 50 93 50 98" stroke="url(#gStem)" stroke-width="4" stroke-linecap="round" fill="none"/>
+    </g>
   </symbol>
 
-  <!-- Leaf -->
+  <!-- ── Leaf, with midrib and serrated edge ── -->
   <symbol id="leaf" viewBox="0 0 100 60">
-    <path d="M2 30C22 4 62 0 98 12 76 46 32 56 2 30Z" fill="url(#gLeaf)"/>
-    <path d="M4 30C34 24 68 20 96 12" stroke="#F6EFEA" stroke-width="1.6" fill="none" opacity=".45"/>
+    <path d="M2 31C14 12 38 2 62 3C78 4 92 8 98 13C88 34 66 51 42 54C24 56 9 46 2 31Z" fill="url(#gLeaf)"/>
+    <path d="M3 31C24 27 48 22 70 15C82 11 92 9 98 13" stroke="#26331F" stroke-width="1.5" fill="none" opacity=".55"/>
+    <path d="M18 36C26 31 33 25 38 18M36 44C44 38 51 31 56 23M55 48C63 41 70 33 74 25" stroke="#26331F" stroke-width=".9" fill="none" opacity=".34"/>
+    <path d="M2 31C14 12 38 2 62 3C78 4 92 8 98 13" stroke="#8CA07C" stroke-width="1" fill="none" opacity=".45"/>
   </symbol>
 </svg>
 
-<div class="aura aura-1"></div>
-<div class="aura aura-2"></div>
-<div class="grain"></div>
-<div class="vignette"></div>
 <div id="petals"></div>
 
 <!-- ═══════════ HERO ═══════════ -->
@@ -903,7 +964,7 @@ footer > *:not(.spray){position:relative;z-index:2;}
     <b>Saturday</b> &nbsp;·&nbsp; 31 October 2026 &nbsp;·&nbsp; <b>Bulawayo</b>
   </div>
 
-  <div class="scroll-cue caps" style="font-size:8px;">
+  <div class="scroll-cue caps" style="font-size:11px;">
     <div class="sc-line"></div>
     Enter
   </div>
@@ -1166,7 +1227,7 @@ footer > *:not(.spray){position:relative;z-index:2;}
 const CONFIG = {
   // Your Cloudflare Worker URL. Leave '' and the site still works —
   // it just won't send the confirmation email.
-  api: 'https://still-frost-4181.unstopablekb.workers.dev/',
+  api: '',
 
   // Where the guest's "I'm coming" WhatsApp is addressed.
   // International format, digits only, no + and no spaces.
@@ -1175,7 +1236,7 @@ const CONFIG = {
   // Shown on confirmation. The venue is deliberately NOT here —
   // it lives on the server and goes out on release day.
   date: 'Saturday 31 October 2026',
-  time: '10:30 am till late',
+  time: '10:30am till late',
   city: 'Bulawayo, Zimbabwe'
 };
 
@@ -1228,21 +1289,34 @@ const CONFIG = {
     spin.innerHTML =
       '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
         '<defs>' +
-          '<linearGradient id="'+id+'" x1="18%" y1="4%" x2="82%" y2="96%">' +
+          // body: lit along the free edge, dark at the base where it tore away
+          '<linearGradient id="'+id+'" x1="26%" y1="2%" x2="74%" y2="100%">' +
             '<stop offset="0%"   stop-color="'+t[2]+'"/>' +
-            '<stop offset="46%"  stop-color="'+t[0]+'"/>' +
+            '<stop offset="38%"  stop-color="'+t[0]+'"/>' +
             '<stop offset="100%" stop-color="'+t[1]+'"/>' +
           '</linearGradient>' +
-          '<radialGradient id="'+id+'s" cx="34%" cy="24%" r="72%">' +
-            '<stop offset="0%"   stop-color="#fff" stop-opacity=".26"/>' +
-            '<stop offset="60%"  stop-color="#fff" stop-opacity="0"/>' +
+          // the cupped fold catches a highlight off-centre
+          '<radialGradient id="'+id+'h" cx="36%" cy="20%" r="58%">' +
+            '<stop offset="0%"   stop-color="#FFE0E2" stop-opacity=".55"/>' +
+            '<stop offset="100%" stop-color="#FFE0E2" stop-opacity="0"/>' +
+          '</radialGradient>' +
+          // and the opposite side falls into its own shadow
+          '<radialGradient id="'+id+'d" cx="74%" cy="86%" r="62%">' +
+            '<stop offset="0%"   stop-color="'+t[1]+'" stop-opacity=".62"/>' +
+            '<stop offset="100%" stop-color="'+t[1]+'" stop-opacity="0"/>' +
           '</radialGradient>' +
         '</defs>' +
         '<path d="'+shape+'" fill="url(#'+id+')"/>' +
-        '<path d="'+shape+'" fill="url(#'+id+'s)"/>' +
-        '<path d="M50 12C46 34 45 60 50 92" stroke="'+t[1]+'" stroke-width="1.1" fill="none" opacity=".34"/>' +
-        '<path d="M50 30C42 42 38 58 40 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".2"/>' +
-        '<path d="M50 30C58 42 62 58 60 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".2"/>' +
+        '<path d="'+shape+'" fill="url(#'+id+'d)"/>' +
+        '<path d="'+shape+'" fill="url(#'+id+'h)"/>' +
+        // rolled edge along the top
+        '<path d="M16 56C18 32 32 12 50 6C68 12 82 32 84 56C76 34 64 18 50 13C36 18 24 34 16 56Z" fill="#FFB3BA" opacity=".22"/>' +
+        // veins fanning from the base
+        '<path d="M50 14C47 36 46 62 50 92" stroke="'+t[1]+'" stroke-width="1.2" fill="none" opacity=".3"/>' +
+        '<path d="M50 28C41 41 37 59 39 79" stroke="'+t[1]+'" stroke-width=".8" fill="none" opacity=".2"/>' +
+        '<path d="M50 28C59 41 63 59 61 79" stroke="'+t[1]+'" stroke-width=".8" fill="none" opacity=".2"/>' +
+        '<path d="M50 40C45 52 43 66 44 82" stroke="'+t[1]+'" stroke-width=".55" fill="none" opacity=".14"/>' +
+        '<path d="M50 40C55 52 57 66 56 82" stroke="'+t[1]+'" stroke-width=".55" fill="none" opacity=".14"/>' +
       '</svg>';
 
     cell.appendChild(spin);
