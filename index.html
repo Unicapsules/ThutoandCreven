@@ -640,11 +640,46 @@ body{
   font-size:clamp(21px,4.8vw,30px);
   color:var(--ink);line-height:1.5;
 }
+.vr-note{
+  margin-top:16px;
+  font-family:'Cormorant',serif;font-weight:500;
+  font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink-faint);line-height:2;
+}
 .suc-msg{
   font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.3em;text-transform:uppercase;
   color:var(--ink-faint);
 }
+
+/* WhatsApp hand-off */
+.wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:20px 24px;margin-bottom:14px;
+  background:var(--oxblood);color:var(--paper-2);
+  text-decoration:none;border:1px solid var(--oxblood);
+  font-family:'Cormorant',serif;font-weight:500;
+  font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+  transition:background .5s,color .5s;
+}
+.wa-btn svg{width:17px;height:17px;fill:currentColor;flex:none;}
+.wa-btn span{padding-left:.34em;}
+.wa-btn:hover{background:transparent;color:var(--oxblood);}
+.wa-btn:focus-visible{outline:2px solid var(--claret);outline-offset:3px;}
+.wa-btn.sent{background:transparent;color:var(--ink-faint);border-color:var(--ink-whisper);}
+.wa-note{
+  font-family:'Cormorant',serif;font-weight:500;
+  font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ink-faint);line-height:2;margin-bottom:26px;
+}
+.rsvp-error{
+  display:none;margin-bottom:22px;padding:12px 16px;
+  border:1px solid rgba(167,36,56,.34);background:rgba(246,228,226,.7);
+  font-family:'Cormorant',serif;font-weight:500;
+  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--claret);line-height:1.9;
+}
+.rsvp-error.show{display:block;}
 .suc-links{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:32px;}
 .suc-contacts{margin-top:40px;}
 .suc-contact{
@@ -943,7 +978,7 @@ footer > *:not(.spray){position:relative;z-index:2;}
     </div>
   </div>
   <div class="venue-line">Bulawayo, Zimbabwe</div>
-  <div class="venue-lock">Exact venue shared upon RSVP</div>
+  <div class="venue-lock">Venue revealed closer to the day</div>
 </div>
 
 <div class="ornament reveal">
@@ -1009,14 +1044,17 @@ footer > *:not(.spray){position:relative;z-index:2;}
   </svg>
   <div class="eyebrow caps caps-sm">RSVP</div>
   <div class="display">Kindly Respond</div>
-  <p class="body-copy" style="margin-top:16px;">The venue will be shared once you respond</p>
+  <p class="body-copy" style="margin-top:16px;">Confirm below and we will send you the venue<br>and directions closer to the day</p>
 
   <div id="form-state" class="rsvp-wrap">
     <div class="editing-flag" id="editing-flag">Updating your RSVP</div>
+    <div class="rsvp-error" id="rsvp-error" role="alert"></div>
 
-    <form id="rsvp-form" name="wedding-rsvp" method="POST" data-netlify="true" netlify-honeypot="b-field">
-      <input type="hidden" name="form-name" value="wedding-rsvp">
-      <div style="display:none"><input name="b-field"></div>
+    <form id="rsvp-form" name="wedding-rsvp" novalidate>
+      <div style="position:absolute;left:-9999px" aria-hidden="true">
+        <label for="b-field">Leave this empty</label>
+        <input id="b-field" name="b-field" tabindex="-1" autocomplete="off">
+      </div>
 
       <div class="rsvp-field">
         <label class="rsvp-label" for="inp-name">Full Name</label>
@@ -1024,14 +1062,18 @@ footer > *:not(.spray){position:relative;z-index:2;}
       </div>
       <div class="rsvp-field">
         <label class="rsvp-label" for="inp-phone">Telephone</label>
-        <input class="rsvp-input" type="tel" name="phone" id="inp-phone" placeholder="Optional" autocomplete="tel">
+        <input class="rsvp-input" type="tel" name="phone" id="inp-phone" placeholder="+267 or +263 …" autocomplete="tel" required>
+      </div>
+      <div class="rsvp-field">
+        <label class="rsvp-label" for="inp-email">Email</label>
+        <input class="rsvp-input" type="email" name="email" id="inp-email" placeholder="So we can send your confirmation" autocomplete="email" required>
       </div>
       <div class="rsvp-field">
         <label class="rsvp-label" for="inp-guests">Number in Party</label>
         <input class="rsvp-input" type="number" name="guests" id="inp-guests" placeholder="Including yourself" min="1" max="20">
       </div>
 
-      <div class="rsvp-lock">Venue revealed after you respond</div>
+      <div class="rsvp-lock">Confirmed guests receive the venue first</div>
       <button type="submit" class="rsvp-btn" id="rsvp-btn"><span>Confirm</span></button>
     </form>
 
@@ -1064,9 +1106,16 @@ footer > *:not(.spray){position:relative;z-index:2;}
     <div class="suc-sub">Your response has been received</div>
 
     <div class="venue-reveal-box">
-      <div class="vr-label">The Venue</div>
-      <div class="vr-venue" id="vr-text">—</div>
+      <div class="vr-label">What we can tell you so far</div>
+      <div class="vr-venue" id="vr-text">Saturday 31 October 2026<br>10:30am till late<br>Bulawayo, Zimbabwe</div>
+      <p class="vr-note">The exact venue is sent to confirmed guests closer to the day</p>
     </div>
+
+    <a class="wa-btn" id="wa-btn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.09-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.21.89 2.39 1.01 2.55.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
+      <span id="wa-btn-label">Send your confirmation to Thuto &amp; Creven</span>
+    </a>
+    <p class="wa-note" id="wa-note">Opens WhatsApp with the message already written — just press send.</p>
 
     <p class="suc-msg">We look forward to celebrating with you</p>
 
@@ -1111,7 +1160,24 @@ footer > *:not(.spray){position:relative;z-index:2;}
 </footer>
 
 <script>
-const VENUE = "Crescent Lifestyle, Bulawayo";
+/* ══════════════════════════════════════════════════════════
+   CONFIG — the only block you need to edit
+   ══════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // Your Cloudflare Worker URL. Leave '' and the site still works —
+  // it just won't send the confirmation email.
+  api: '',
+
+  // Where the guest's "I'm coming" WhatsApp is addressed.
+  // International format, digits only, no + and no spaces.
+  coupleWhatsApp: '26776668180',
+
+  // Shown on confirmation. The venue is deliberately NOT here —
+  // it lives on the server and goes out on release day.
+  date: 'Saturday 31 October 2026',
+  time: '10:30am till late',
+  city: 'Bulawayo, Zimbabwe'
+};
 
 /* ══════ FALLING ROSE PETALS ══════ */
 (function(){
@@ -1209,9 +1275,9 @@ const KEY='ct_rsvps_oct2026';
 let editIndex=null;
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch{return[];}}
 function persist(l){try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
-function saveRsvp(name,phone,guests){
+function saveRsvp(name,phone,email,guests){
   const l=load();
-  const entry={name,phone:phone||'',guests:guests||'1',t:Date.now()};
+  const entry={name,phone:phone||'',email:email||'',guests:guests||'1',t:Date.now()};
   if(editIndex!==null&&l[editIndex]){
     entry.t=l[editIndex].t; entry.edited=Date.now(); l[editIndex]=entry;
   }else{
@@ -1269,6 +1335,7 @@ function openEditor(idx){
   editIndex=idx;
   document.getElementById('inp-name').value  =g.name  ||'';
   document.getElementById('inp-phone').value =g.phone ||'';
+  document.getElementById('inp-email').value =g.email ||'';
   document.getElementById('inp-guests').value=g.guests||'';
   if(flagEl) flagEl.classList.add('show');
   btn.disabled=false;
@@ -1331,7 +1398,7 @@ if(withdrawBtn){
     let idx=editIndex;
     if(idx===null){const l=load(); if(!l.length) return; idx=l.length-1;}
     deleteRsvp(idx); editIndex=null;
-    ['inp-name','inp-phone','inp-guests'].forEach(i=>document.getElementById(i).value='');
+    ['inp-name','inp-phone','inp-email','inp-guests'].forEach(i=>document.getElementById(i).value='');
     if(flagEl) flagEl.classList.remove('show');
     btn.disabled=false; btn.querySelector('span').textContent='Confirm';
     armed=false; withdrawBtn.textContent='Withdraw my response';
@@ -1339,29 +1406,79 @@ if(withdrawBtn){
   });
 }
 
+/* ══════ THE MESSAGE THE GUEST SENDS YOU ══════ */
+function coupleMessage(name,guests){
+  const n=parseInt(guests)||1;
+  const party=n>1?(n+' of us will be there')
+                 :'I will be there';
+  return 'Hello Thuto and Creven — it\'s '+name+'. '
+       + 'I\'ve just confirmed on your wedding website that '+party+' on '
+       + CONFIG.date+'. Thank you for inviting me. Congratulations to you both.';
+}
+function waLink(name,guests){
+  return 'https://wa.me/'+CONFIG.coupleWhatsApp
+       + '?text='+encodeURIComponent(coupleMessage(name,guests));
+}
+
 /* ══════ SUBMIT ══════ */
+const errEl = document.getElementById('rsvp-error');
+function showError(msg){
+  if(!errEl) return;
+  errEl.textContent=msg;
+  errEl.classList.add('show');
+}
+function clearError(){ if(errEl) errEl.classList.remove('show'); }
+
 form.addEventListener('submit',async e=>{
   e.preventDefault();
+  clearError();
+
+  // honeypot — a real guest never fills this
+  const bot=document.getElementById('b-field');
+  if(bot&&bot.value) return;
+
   const name  =document.getElementById('inp-name').value.trim();
   const phone =document.getElementById('inp-phone').value.trim();
+  const email =document.getElementById('inp-email').value.trim();
   const guests=document.getElementById('inp-guests').value.trim();
-  if(!name){document.getElementById('inp-name').focus();return;}
+
+  if(!name){showError('Please tell us your name');document.getElementById('inp-name').focus();return;}
+  if(!phone){showError('We need a phone number to reach you');document.getElementById('inp-phone').focus();return;}
+  if(!/^\S+@\S+\.\S+$/.test(email)){showError('That email doesn’t look right — your confirmation is sent there');document.getElementById('inp-email').focus();return;}
 
   const wasEditing = editIndex!==null;
   btn.disabled=true;
   btn.querySelector('span').textContent = wasEditing?'Updating':'Confirming';
-  saveRsvp(name,phone,guests);
+
+  saveRsvp(name,phone,email,guests);
   renderGuests();
   if(flagEl) flagEl.classList.remove('show');
 
-  try{
-    await fetch('/',{method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams({'form-name':'wedding-rsvp',name,phone,guests:guests||'1'}).toString()});
-  }catch(_){}
+  // Send to the Worker, which emails the guest their confirmation.
+  // If it fails the RSVP still stands — we never block the guest on it.
+  let emailed=false;
+  if(CONFIG.api){
+    try{
+      const r=await fetch(CONFIG.api,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({name,phone,email,guests:guests||'1',editing:wasEditing})
+      });
+      emailed=r.ok;
+    }catch(_){ emailed=false; }
+  }
+
+  // Prepare the WhatsApp hand-off
+  const waBtn=document.getElementById('wa-btn');
+  if(waBtn) waBtn.href=waLink(name,guests);
+  const waNote=document.getElementById('wa-note');
+  if(waNote){
+    waNote.textContent = emailed
+      ? 'A copy has been emailed to you. Opens WhatsApp with the message already written — just press send.'
+      : 'Opens WhatsApp with the message already written — just press send.';
+  }
 
   document.getElementById('suc-name').textContent=name;
-  document.getElementById('vr-text').textContent=VENUE;
   const sub=document.querySelector('.suc-sub');
   if(sub) sub.textContent = wasEditing?'Your response has been updated':'Your response has been received';
   btn.disabled=false; btn.querySelector('span').textContent='Confirm';
@@ -1375,6 +1492,18 @@ form.addEventListener('submit',async e=>{
     }));
   },700);
 });
+
+// Mark the button once they've been handed off to WhatsApp
+const waBtnEl=document.getElementById('wa-btn');
+if(waBtnEl){
+  waBtnEl.addEventListener('click',()=>{
+    setTimeout(()=>{
+      waBtnEl.classList.add('sent');
+      const lbl=document.getElementById('wa-btn-label');
+      if(lbl) lbl.textContent='Send again on WhatsApp';
+    },1200);
+  });
+}
 
 /* ══════ GUEST PANEL ══════ */
 const gToggle=document.getElementById('guest-toggle');
@@ -1394,8 +1523,8 @@ if(btnExport){
     const l=load();
     if(!l.length){btnExport.textContent='No responses';setTimeout(()=>btnExport.textContent='Download CSV',1800);return;}
     const q=v=>'"'+String(v||'').replace(/"/g,'""')+'"';
-    const csv=['Name,Telephone,Party Size,Responded']
-      .concat(l.map(g=>[q(g.name),q(g.phone),q(g.guests||1),q(new Date(g.t).toLocaleString())].join(','))).join('\n');
+    const csv=['Name,Telephone,Email,Party Size,Responded']
+      .concat(l.map(g=>[q(g.name),q(g.phone),q(g.email),q(g.guests||1),q(new Date(g.t).toLocaleString())].join(','))).join('\n');
     const a=document.createElement('a');
     a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
     a.download='guest-list.csv'; a.click(); URL.revokeObjectURL(a.href);
