@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creven &amp; Thuto — 31 October 2026</title>
 <meta name="description" content="Wedding Celebration · 31 October 2026 · Bulawayo, Zimbabwe">
+<meta name="theme-color" content="#FBF7F4">
 <meta property="og:title" content="Creven &amp; Thuto — 31 October 2026">
 <meta property="og:description" content="Wedding Celebration · Bulawayo, Zimbabwe · 10:30AM till late.">
 <meta property="og:type" content="website">
@@ -15,28 +16,36 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  --ink:#060505;
-  --ink-2:#0C0A09;
-  --ink-panel:#0A0808;
-  --ivory:#F2EDE4;
-  --ivory-dim:rgba(242,237,228,.62);
-  --ivory-faint:rgba(242,237,228,.34);
-  --whisper:rgba(242,237,228,.13);
+  /* paper */
+  --paper:#FBF7F4;
+  --paper-2:#FFFFFF;
+  --paper-warm:#F6EFEA;
 
+  /* ink */
+  --ink:#2A1D1E;
+  --ink-dim:rgba(42,29,30,.62);
+  --ink-faint:rgba(42,29,30,.50);
+  --ink-whisper:rgba(42,29,30,.13);
+  --hair:rgba(42,29,30,.09);
+
+  /* rose */
   --oxblood:#8C1526;
-  --claret:#B01F33;
-  --wine:#4A0B14;
-  --ember:rgba(176,31,51,.55);
+  --claret:#A72438;
+  --rose:#B01226;
+  --rose-soft:#D4505F;
+  --blush:#F6E4E2;
+  --blush-air:rgba(176,18,38,.10);
 
-  --champagne:#C5A572;
-  --champagne-dim:rgba(197,165,114,.5);
-  --champagne-hair:rgba(197,165,114,.18);
+  /* gold */
+  --gold:#A3823F;
+  --gold-dim:rgba(185,154,99,.72);
+  --gold-hair:rgba(185,154,99,.30);
 }
 
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{
-  background:var(--ink);
-  color:var(--ivory);
+  background:var(--paper);
+  color:var(--ink);
   font-family:'Cormorant Garamond',serif;
   font-weight:300;
   line-height:1.85;
@@ -48,7 +57,7 @@ body{
 /* ═══════ TYPE SYSTEM ═══════ */
 .caps{
   font-family:'Cormorant',serif;
-  font-weight:400;
+  font-weight:500;
   text-transform:uppercase;
   letter-spacing:.42em;
 }
@@ -58,26 +67,50 @@ body{
 /* ═══════ ATMOSPHERE ═══════ */
 .aura{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
 .aura-1{
-  top:-200px;left:-180px;width:560px;height:560px;
-  background:radial-gradient(circle,rgba(140,21,38,.3) 0%,transparent 62%);
+  top:-220px;left:-200px;width:620px;height:620px;
+  background:radial-gradient(circle,rgba(196,23,43,.16) 0%,transparent 64%);
   animation:swell 20s ease-in-out infinite;
 }
 .aura-2{
-  bottom:-180px;right:-180px;width:480px;height:480px;
-  background:radial-gradient(circle,rgba(140,21,38,.16) 0%,transparent 62%);
+  bottom:-200px;right:-200px;width:540px;height:540px;
+  background:radial-gradient(circle,rgba(185,154,99,.22) 0%,transparent 64%);
   animation:swell 26s ease-in-out infinite reverse;
 }
 @keyframes swell{
-  0%,100%{opacity:.6;transform:scale(1);}
+  0%,100%{opacity:.55;transform:scale(1);}
   50%    {opacity:1;transform:scale(1.12);}
 }
 .grain{
-  position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.16;
+  position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .vignette{
   position:fixed;inset:0;pointer-events:none;z-index:2;
-  background:radial-gradient(ellipse at center,transparent 34%,rgba(0,0,0,.78) 100%);
+  background:radial-gradient(ellipse at center,transparent 48%,rgba(163,110,110,.09) 100%);
+}
+
+/* ═══════ ROSE SPRAYS ═══════ */
+.spray{position:absolute;pointer-events:none;z-index:0;}
+.spray-hero-tl{top:-42px;left:-70px;width:clamp(210px,40vw,340px);opacity:.72;
+  animation:sway 14s ease-in-out infinite;}
+.spray-hero-br{bottom:-58px;right:-74px;width:clamp(200px,38vw,320px);opacity:.66;
+  transform:scaleX(-1);animation:sway 17s ease-in-out infinite reverse;}
+.spray-foot{top:-56px;left:50%;width:clamp(220px,52vw,330px);
+  transform:translateX(-50%);opacity:.78;}
+.spray-side{width:clamp(120px,26vw,200px);opacity:.6;z-index:0;}
+.spray-quote{top:6px;right:-46px;}
+.spray-rsvp{bottom:10px;left:-52px;transform:scaleX(-1);}
+.spray-card-a{position:absolute;top:-14px;left:-18px;width:118px;opacity:.92;z-index:1;pointer-events:none;}
+.spray-card-b{position:absolute;bottom:-16px;right:-20px;width:104px;opacity:.82;z-index:1;
+  transform:rotate(180deg);pointer-events:none;}
+@keyframes sway{
+  0%,100%{transform:rotate(0deg);}
+  50%    {transform:rotate(2.4deg);}
+}
+.spray-hero-br{animation-name:swayFlip;}
+@keyframes swayFlip{
+  0%,100%{transform:scaleX(-1) rotate(0deg);}
+  50%    {transform:scaleX(-1) rotate(2.4deg);}
 }
 
 /* ═══════ REALISTIC PETALS ═══════ */
@@ -124,31 +157,38 @@ body{
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   text-align:center;padding:100px 32px 120px;
+  overflow:hidden;
 }
+.hero > *:not(.spray):not(.scroll-cue){position:relative;z-index:2;}
 
 /* Infinity mark */
-.inf-wrap{margin-bottom:38px;animation:infDrift 9s 3.4s ease-in-out infinite;}
+.inf-wrap{margin-bottom:34px;animation:infDrift 9s 3.4s ease-in-out infinite;}
 @keyframes infDrift{
   0%,100%{transform:translateY(0);opacity:1;}
   50%    {transform:translateY(-5px);opacity:.86;}
 }
 .inf{width:96px;height:52px;opacity:0;animation:infFade 2s .3s ease forwards;}
 .inf path{
-  fill:none;stroke:var(--champagne-dim);
+  fill:none;stroke:var(--gold);
   stroke-width:1.15;stroke-linecap:round;
   stroke-dasharray:250;stroke-dashoffset:250;
   animation:infTrace 3.4s .55s cubic-bezier(.45,0,.15,1) forwards;
 }
 .inf .inf-glow{
-  stroke:rgba(197,165,114,.16);stroke-width:3.2;
+  stroke:rgba(185,154,99,.2);stroke-width:3.2;
   stroke-dashoffset:0;animation:none;
 }
 @keyframes infFade{to{opacity:1;}}
 @keyframes infTrace{to{stroke-dashoffset:0;}}
 
+.hero-rose{
+  width:46px;height:46px;display:block;margin:0 auto 22px;
+  opacity:0;animation:rise 1.6s 1.2s ease forwards;
+}
+
 .mono{
-  color:var(--champagne-dim);
-  margin-bottom:34px;
+  color:var(--gold);
+  margin-bottom:30px;
   opacity:0;animation:rise 1.4s 1.6s ease forwards;
 }
 
@@ -156,7 +196,7 @@ body{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(38px,9.5vw,72px);
-  line-height:1.14;color:var(--ivory);
+  line-height:1.14;color:var(--ink);
   letter-spacing:.01em;
 }
 .name-line{display:block;overflow:hidden;padding:0 2px;}
@@ -176,23 +216,22 @@ body{
   font-size:clamp(19px,4vw,30px);
   color:var(--claret);
   margin:14px 0;
-  text-shadow:0 0 34px rgba(176,31,51,.4);
   opacity:0;animation:rise 1.6s 2s ease forwards;
 }
 
 .hairline{
-  width:1px;height:76px;margin:44px auto;
-  background:linear-gradient(transparent,var(--ember),transparent);
+  width:1px;height:70px;margin:40px auto;
+  background:linear-gradient(transparent,var(--rose-soft),transparent);
   transform:scaleY(0);transform-origin:top;
   animation:drawDown 1.8s 2.6s cubic-bezier(.16,1,.3,1) forwards;
 }
 @keyframes drawDown{to{transform:scaleY(1);}}
 
 .hero-meta{
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
   opacity:0;animation:rise 1.6s 3s ease forwards;
 }
-.hero-meta b{font-weight:500;color:var(--ivory-dim);}
+.hero-meta b{font-weight:500;color:var(--ink-dim);}
 
 @keyframes rise{
   from{opacity:0;transform:translateY(14px);}
@@ -203,10 +242,14 @@ body{
   position:absolute;bottom:42px;left:50%;
   transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:11px;
-  color:var(--whisper);
-  opacity:0;animation:rise 1.4s 3.6s ease forwards, float 4s 5s ease-in-out infinite;
+  color:var(--ink-faint);
+  opacity:0;animation:riseCue 1.4s 3.6s ease forwards, float 4s 5s ease-in-out infinite;
 }
-.sc-line{width:1px;height:34px;background:linear-gradient(var(--champagne-dim),transparent);}
+@keyframes riseCue{
+  from{opacity:0;transform:translateX(-50%) translateY(14px);}
+  to  {opacity:1;transform:translateX(-50%) translateY(0);}
+}
+.sc-line{width:1px;height:34px;background:linear-gradient(var(--gold-dim),transparent);}
 @keyframes float{
   0%,100%{transform:translateX(-50%) translateY(0);}
   50%    {transform:translateX(-50%) translateY(-8px);}
@@ -214,43 +257,43 @@ body{
 
 /* ═══════ SECTIONS ═══════ */
 .section{
-  position:relative;z-index:3;
+  position:relative;z-index:3;overflow:hidden;
   padding:104px 34px;
   display:flex;flex-direction:column;
   align-items:center;text-align:center;
   max-width:640px;margin:0 auto;
 }
-.eyebrow{color:var(--champagne-dim);margin-bottom:26px;}
+.eyebrow{color:var(--gold);margin-bottom:24px;}
 
 .display{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;
   font-size:clamp(30px,6.4vw,50px);
-  line-height:1.2;color:var(--ivory);
+  line-height:1.2;color:var(--ink);
 }
 .display.it{font-style:italic;}
 
 .body-copy{
   font-size:clamp(15px,3.4vw,18px);
-  font-weight:300;
-  color:var(--ivory-dim);
+  font-weight:400;
+  color:var(--ink-dim);
   line-height:2;margin-top:22px;
   max-width:400px;
 }
 
-/* Ornament divider */
+/* Ornament divider — rose */
 .ornament{
   position:relative;z-index:3;
   display:flex;align-items:center;justify-content:center;
-  gap:16px;max-width:200px;margin:0 auto;
+  gap:14px;max-width:230px;margin:0 auto;
 }
 .orn-line{
-  flex:1;height:1px;background:var(--champagne-hair);
+  flex:1;height:1px;background:var(--gold-hair);
   position:relative;overflow:hidden;
 }
 .orn-line::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,var(--champagne),transparent);
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
   transform:translateX(-110%);
   animation:shimmer 7s ease-in-out infinite;
 }
@@ -259,52 +302,50 @@ body{
   0%,72%{transform:translateX(-110%);}
   100%  {transform:translateX(110%);}
 }
-.orn-dot{
-  width:5px;height:5px;transform:rotate(45deg);
-  background:var(--claret);
-  box-shadow:0 0 10px rgba(176,31,51,.55);
-}
+.orn-rose{width:26px;height:26px;flex:none;display:block;}
+.orn-leaf{width:15px;height:15px;flex:none;display:block;opacity:.8;}
 
 /* ═══════ QUOTE ═══════ */
 .quote{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;font-weight:300;
   font-size:clamp(22px,5.2vw,36px);
-  color:var(--ivory);line-height:1.55;
+  color:var(--ink);line-height:1.55;
   letter-spacing:.005em;
 }
-.quote-src{color:var(--champagne-dim);margin-top:32px;}
+.quote-src{color:var(--gold);margin-top:30px;}
 
 /* ═══════ DATE ═══════ */
 .date-stage{
   position:relative;width:100%;max-width:500px;
   margin-top:14px;padding:56px 24px 50px;
+  overflow:hidden;
   background:
-    radial-gradient(ellipse at 50% 42%,rgba(140,21,38,.16) 0%,transparent 66%),
-    #050404;
-  border-top:1px solid var(--champagne-hair);
-  border-bottom:1px solid var(--champagne-hair);
-  box-shadow:inset 0 0 90px rgba(0,0,0,.9);
+    radial-gradient(ellipse at 50% 40%,rgba(246,228,226,.9) 0%,rgba(255,255,255,0) 68%),
+    var(--paper-2);
+  border-top:1px solid var(--gold-hair);
+  border-bottom:1px solid var(--gold-hair);
+  box-shadow:0 22px 60px -34px rgba(140,21,38,.28);
 }
+.date-stage > *:not(svg){position:relative;z-index:2;}
 .d-month{
   font-family:'Cormorant',serif;
-  font-weight:400;font-size:clamp(13px,3.2vw,17px);
+  font-weight:500;font-size:clamp(13px,3.2vw,17px);
   letter-spacing:.6em;text-transform:uppercase;
-  color:var(--champagne);
+  color:var(--claret);
   margin-bottom:10px;padding-left:.6em;
 }
 .d-number{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;
   font-size:clamp(104px,28vw,190px);
-  line-height:.84;color:var(--ivory);
+  line-height:.84;color:var(--ink);
   letter-spacing:-.02em;
-  text-shadow:0 0 70px rgba(176,31,51,.3);
 }
 .d-year{
   font-family:'Cormorant',serif;
-  font-weight:300;font-size:clamp(15px,3.6vw,21px);
-  letter-spacing:.72em;color:var(--champagne);
+  font-weight:400;font-size:clamp(15px,3.6vw,21px);
+  letter-spacing:.72em;color:var(--gold);
   margin-top:14px;padding-left:.72em;
 }
 .d-strip{
@@ -313,53 +354,54 @@ body{
 }
 .d-chip{
   padding:0 24px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:10px;letter-spacing:.34em;
-  text-transform:uppercase;color:var(--ivory-dim);
+  text-transform:uppercase;color:var(--ink-dim);
 }
-.d-chip + .d-chip{border-left:1px solid var(--whisper);}
+.d-chip + .d-chip{border-left:1px solid var(--ink-whisper);}
 
 .venue-line{
   margin-top:42px;
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(19px,4.4vw,26px);
-  color:var(--ivory-dim);
+  color:var(--ink-dim);
 }
 .venue-lock{
   display:inline-flex;align-items:center;gap:11px;
   margin-top:20px;padding:11px 24px;
-  border:1px solid var(--whisper);
-  font-family:'Cormorant',serif;font-weight:400;
+  border:1px solid var(--ink-whisper);
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
   transition:border-color .6s,color .6s;
 }
-.venue-lock:hover{border-color:var(--champagne-dim);color:var(--ivory-dim);}
+.venue-lock:hover{border-color:var(--rose-soft);color:var(--claret);}
 
 /* ═══════ COUNTDOWN ═══════ */
 .cd-grid{
   display:flex;max-width:460px;width:100%;margin-top:44px;
-  background:linear-gradient(180deg,rgba(140,21,38,.07),transparent 70%),#070606;
-  border-top:1px solid var(--champagne-hair);
-  border-bottom:1px solid var(--champagne-hair);
+  background:linear-gradient(180deg,rgba(246,228,226,.75),rgba(255,255,255,0) 72%),var(--paper-2);
+  border-top:1px solid var(--gold-hair);
+  border-bottom:1px solid var(--gold-hair);
+  box-shadow:0 18px 50px -36px rgba(140,21,38,.3);
 }
 .cd-unit{flex:1;padding:34px 8px;text-align:center;position:relative;}
 .cd-unit + .cd-unit::before{
   content:'';position:absolute;left:0;top:26%;bottom:26%;
-  width:1px;background:var(--whisper);
+  width:1px;background:var(--ink-whisper);
 }
 .cd-num{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-size:clamp(32px,8vw,50px);
-  color:var(--ivory);display:block;line-height:1;
+  color:var(--ink);display:block;line-height:1;
   transition:opacity .5s ease;
 }
 .cd-num.tick{opacity:.42;}
 .cd-lbl{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.34em;text-transform:uppercase;
-  color:var(--champagne-dim);margin-top:15px;display:block;
+  color:var(--gold);margin-top:15px;display:block;
 }
 
 /* ═══════ DRESS CODE ═══════ */
@@ -368,71 +410,72 @@ body{
   font-weight:400;
   font-size:clamp(30px,7.6vw,54px);
   letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ivory);line-height:1.1;
+  color:var(--ink);line-height:1.1;
   padding-left:.16em;
 }
 .dc-caption{
-  color:var(--champagne-dim);margin-top:18px;margin-bottom:48px;
+  color:var(--gold);margin-top:18px;margin-bottom:48px;
 }
 .swatches{display:flex;gap:1px;margin-bottom:46px;}
 .sw{
   width:64px;height:82px;position:relative;
   transition:transform .8s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 12px 30px -20px rgba(42,29,30,.5);
 }
 .sw:hover{transform:translateY(-7px);}
-.sw-black{background:#0D0C0B;border:1px solid rgba(242,237,228,.16);}
-.sw-white{background:var(--ivory);}
+.sw-black{background:#151011;}
+.sw-white{background:#FFFFFF;border:1px solid rgba(42,29,30,.14);}
 .sw-red{background:var(--oxblood);}
 .sw-lbl{
   position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--ivory-faint);white-space:nowrap;
+  color:var(--ink-faint);white-space:nowrap;
 }
 .dc-desc{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(19px,4.4vw,26px);
-  color:var(--ivory);line-height:1.65;
+  color:var(--ink);line-height:1.65;
   max-width:380px;margin-top:26px;
 }
 .dc-desc em{color:var(--claret);font-style:italic;font-weight:400;}
-.dc-note{color:var(--ivory-faint);margin-top:26px;}
+.dc-note{color:var(--ink-faint);margin-top:26px;}
 
 /* ═══════ RSVP ═══════ */
 .rsvp-wrap{width:100%;max-width:380px;margin-top:48px;text-align:left;}
 .rsvp-field{margin-bottom:32px;}
 .rsvp-label{
   display:block;margin-bottom:12px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.36em;text-transform:uppercase;
-  color:var(--champagne-dim);
+  color:var(--gold);
 }
 .rsvp-input{
   width:100%;background:transparent;
-  border:none;border-bottom:1px solid var(--whisper);
-  color:var(--ivory);
-  font-family:'Cormorant Garamond',serif;font-weight:300;
+  border:none;border-bottom:1px solid var(--ink-whisper);
+  color:var(--ink);
+  font-family:'Cormorant Garamond',serif;font-weight:400;
   font-size:19px;padding:6px 0 13px;
   outline:none;transition:border-color .6s;
 }
-.rsvp-input::placeholder{color:rgba(242,237,228,.16);font-style:italic;}
-.rsvp-input:focus{border-color:var(--champagne-dim);}
+.rsvp-input::placeholder{color:rgba(42,29,30,.24);font-style:italic;}
+.rsvp-input:focus{border-color:var(--claret);}
 
 .rsvp-lock{
   display:flex;align-items:center;gap:11px;
   margin-bottom:36px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
 }
 
 .rsvp-btn{
   position:relative;width:100%;padding:22px 32px;
-  background:transparent;color:var(--ivory);
-  border:1px solid var(--champagne-dim);
+  background:transparent;color:var(--ink);
+  border:1px solid var(--claret);
   cursor:pointer;overflow:hidden;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:10px;letter-spacing:.42em;text-transform:uppercase;
   transition:color .7s,border-color .7s;
 }
@@ -443,19 +486,19 @@ body{
   transform:scaleX(0);transform-origin:left;
   transition:transform .85s cubic-bezier(.16,1,.3,1);z-index:1;
 }
-.rsvp-btn:hover{border-color:var(--oxblood);}
+.rsvp-btn:hover{border-color:var(--oxblood);color:var(--paper-2);}
 .rsvp-btn:hover::before{transform:scaleX(1);}
 .rsvp-btn:disabled{opacity:.42;cursor:not-allowed;}
 
 .gc-note{
   text-align:center;margin-top:28px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
 }
 .gc-note span{
   font-family:'Cormorant Garamond',serif;
-  font-weight:400;font-size:18px;color:var(--champagne);
+  font-weight:400;font-size:18px;color:var(--claret);
   vertical-align:middle;margin-right:7px;letter-spacing:0;
 }
 
@@ -464,14 +507,14 @@ body{
   display:inline-flex;align-items:center;gap:10px;
   background:none;border:none;cursor:pointer;
   border-bottom:1px solid transparent;padding:6px 0;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
   transition:color .5s,border-color .5s;
 }
 .guest-toggle{margin-top:20px;}
 .guest-toggle:hover,.edit-link:hover{
-  color:var(--champagne);border-color:var(--champagne-dim);
+  color:var(--claret);border-color:var(--rose-soft);
 }
 
 .guest-panel{
@@ -481,26 +524,26 @@ body{
 }
 .guest-panel.open{max-height:1600px;opacity:1;}
 .guest-inner{
-  border-top:1px solid var(--champagne-hair);
-  border-bottom:1px solid var(--champagne-hair);
+  border-top:1px solid var(--gold-hair);
+  border-bottom:1px solid var(--gold-hair);
   padding:32px 0;
 }
 .guest-head{
   display:flex;justify-content:space-between;align-items:baseline;
-  padding-bottom:20px;border-bottom:1px solid var(--whisper);
+  padding-bottom:20px;border-bottom:1px solid var(--ink-whisper);
 }
 .gh-title{
   font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-style:italic;font-size:21px;color:var(--ivory);
+  font-weight:300;font-style:italic;font-size:21px;color:var(--ink);
 }
 .gh-count{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--champagne-dim);
+  color:var(--gold);
 }
 .guest-row{
   display:flex;justify-content:space-between;align-items:center;
-  padding:16px 0;border-bottom:1px solid rgba(242,237,228,.06);
+  padding:16px 0;border-bottom:1px solid var(--hair);
   animation:rowIn .7s ease backwards;
 }
 @keyframes rowIn{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:none;}}
@@ -509,55 +552,55 @@ body{
 .gr-left{display:flex;align-items:baseline;gap:15px;text-align:left;}
 .gr-idx{
   font-family:'Cormorant',serif;font-size:10px;
-  letter-spacing:.14em;color:var(--champagne-dim);min-width:22px;
+  letter-spacing:.14em;color:var(--gold);min-width:22px;
 }
 .gr-name{
   font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-size:18px;color:var(--ivory);
+  font-weight:400;font-size:18px;color:var(--ink);
 }
 .gr-actions{display:flex;align-items:center;gap:16px;}
 .gr-guests{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--ivory-faint);white-space:nowrap;
+  color:var(--ink-faint);white-space:nowrap;
 }
 .gr-edit,.gr-del{
   background:none;border:none;cursor:pointer;padding:4px 0;
   border-bottom:1px solid transparent;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
   transition:color .45s,border-color .45s;
 }
-.gr-edit:hover{color:var(--champagne);border-color:var(--champagne-dim);}
-.gr-del:hover,.gr-del.confirm{color:var(--claret);border-color:rgba(156,27,46,.6);}
+.gr-edit:hover{color:var(--gold);border-color:var(--gold-hair);}
+.gr-del:hover,.gr-del.confirm{color:var(--claret);border-color:rgba(167,36,56,.5);}
 .guest-empty{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:16px;color:var(--ivory-faint);padding:28px 0;
+  font-size:16px;color:var(--ink-faint);padding:28px 0;
 }
 .guest-actions{display:flex;gap:12px;margin-top:26px;}
 .g-btn{
   flex:1;background:transparent;
-  border:1px solid var(--whisper);color:var(--ivory-faint);
+  border:1px solid var(--ink-whisper);color:var(--ink-faint);
   padding:14px 10px;cursor:pointer;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.28em;text-transform:uppercase;
   transition:border-color .5s,color .5s;
 }
-.g-btn:hover{border-color:var(--champagne-dim);color:var(--champagne);}
+.g-btn:hover{border-color:var(--rose-soft);color:var(--claret);}
 .guest-note{
   margin-top:22px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.24em;text-transform:uppercase;
-  color:rgba(242,237,228,.18);line-height:2.2;
+  color:rgba(42,29,30,.28);line-height:2.2;
 }
 
 .editing-flag{
   display:none;align-items:center;gap:11px;
   margin-bottom:28px;padding:13px 18px;
-  border:1px solid rgba(156,27,46,.34);
-  background:rgba(122,20,36,.09);
-  font-family:'Cormorant',serif;font-weight:400;
+  border:1px solid rgba(167,36,56,.28);
+  background:rgba(246,228,226,.6);
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;
   color:var(--claret);
 }
@@ -565,78 +608,79 @@ body{
 
 /* ═══════ SUCCESS ═══════ */
 .success-wrap{display:none;text-align:center;width:100%;max-width:420px;}
-.suc-inf{
-  width:64px;height:36px;margin:0 auto 28px;display:block;
+.suc-rose{
+  width:58px;height:58px;margin:0 auto 22px;display:block;
   animation:sucIn 1.4s cubic-bezier(.16,1,.3,1);
 }
-.suc-inf path{fill:none;stroke:var(--champagne-dim);stroke-width:1.3;stroke-linecap:round;}
 @keyframes sucIn{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
 .suc-name{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(28px,7vw,44px);
-  color:var(--ivory);margin-bottom:14px;
+  color:var(--ink);margin-bottom:14px;
 }
 .suc-sub{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.34em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
 }
 .venue-reveal-box{
   margin:40px 0;padding:36px 0;
-  border-top:1px solid var(--champagne-hair);
-  border-bottom:1px solid var(--champagne-hair);
+  border-top:1px solid var(--gold-hair);
+  border-bottom:1px solid var(--gold-hair);
 }
 .vr-label{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.36em;text-transform:uppercase;
-  color:var(--champagne-dim);margin-bottom:20px;
+  color:var(--gold);margin-bottom:20px;
 }
 .vr-venue{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(21px,4.8vw,30px);
-  color:var(--ivory);line-height:1.5;
+  color:var(--ink);line-height:1.5;
 }
 .suc-msg{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:9px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
 }
 .suc-links{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:32px;}
 .suc-contacts{margin-top:40px;}
 .suc-contact{
   display:flex;justify-content:space-between;align-items:center;
-  padding:19px 0;border-bottom:1px solid var(--whisper);
-  text-decoration:none;color:var(--ivory);
+  padding:19px 0;border-bottom:1px solid var(--ink-whisper);
+  text-decoration:none;color:var(--ink);
   transition:padding-left .55s cubic-bezier(.16,1,.3,1),color .5s;
 }
-.suc-contact:hover{padding-left:10px;color:var(--champagne);}
+.suc-contact:hover{padding-left:10px;color:var(--claret);}
 .sc-who{
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;
-  color:var(--ivory-faint);
+  color:var(--ink-faint);
 }
-.sc-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:20px;}
+.sc-num{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:20px;}
 
 /* ═══════ FOOTER ═══════ */
 footer{
-  position:relative;z-index:3;
-  padding:100px 34px;text-align:center;
-  border-top:1px solid var(--champagne-hair);
+  position:relative;z-index:3;overflow:hidden;
+  padding:120px 34px 100px;text-align:center;
+  border-top:1px solid var(--gold-hair);
+  background:linear-gradient(180deg,rgba(246,228,226,.55),rgba(255,255,255,0) 60%);
 }
+footer > *:not(.spray){position:relative;z-index:2;}
 .foot-names{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(28px,7vw,46px);
-  color:var(--ivory);margin-bottom:30px;
+  color:var(--ink);margin-bottom:30px;
 }
-.foot-detail{color:var(--ivory-faint);}
+.foot-detail{color:var(--ink-faint);}
 .foot-quote{
   margin-top:24px;
-  font-family:'Cormorant',serif;font-weight:400;
+  font-family:'Cormorant',serif;font-weight:500;
   font-size:8px;letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(242,237,228,.14);
+  color:rgba(42,29,30,.26);
 }
 
 /* ═══════ REVEAL ═══════ */
@@ -650,22 +694,121 @@ footer{
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;}
   .reveal{opacity:1;transform:none;}
-  .name-line > i,.mono,.amp,.hero-meta,.scroll-cue,.inf{opacity:1;transform:none;}
+  .name-line > i,.mono,.amp,.hero-meta,.scroll-cue,.inf,.hero-rose{opacity:1;transform:none;}
   .hairline{transform:scaleY(1);}
   .inf path{stroke-dashoffset:0;}
+  .spray-hero-br{transform:scaleX(-1);}
   #petals{display:none;}
 }
 
 @media(max-width:440px){
   .section{padding:82px 26px;}
   .d-number{font-size:clamp(92px,26vw,150px);}
+  .spray-side{opacity:.4;}
+  .spray-quote{right:-58px;}
+  .spray-rsvp{left:-62px;}
+  .spray-card-a{width:86px;}
+  .spray-card-b{width:76px;}
   .sw{width:54px;height:70px;}
   .d-chip{padding:0 16px;letter-spacing:.24em;}
   .caps{letter-spacing:.32em;}
+  .spray-hero-tl{top:-24px;left:-56px;opacity:.6;}
+  .spray-hero-br{bottom:-34px;right:-58px;opacity:.55;}
+  .ornament{max-width:190px;}
 }
 </style>
 </head>
 <body>
+
+<!-- ═══════════ ROSE ARTWORK DEFINITIONS ═══════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="gPetalOuter" cx="42%" cy="34%" r="70%">
+      <stop offset="0%"   stop-color="#E14B5A"/>
+      <stop offset="52%"  stop-color="#C0182C"/>
+      <stop offset="100%" stop-color="#7E0C1B"/>
+    </radialGradient>
+    <radialGradient id="gPetalInner" cx="44%" cy="36%" r="68%">
+      <stop offset="0%"   stop-color="#C41E31"/>
+      <stop offset="55%"  stop-color="#8C1526"/>
+      <stop offset="100%" stop-color="#500911"/>
+    </radialGradient>
+    <radialGradient id="gPetalOuterD" cx="42%" cy="34%" r="70%">
+      <stop offset="0%"   stop-color="#B31A2C"/>
+      <stop offset="52%"  stop-color="#8C1526"/>
+      <stop offset="100%" stop-color="#520A13"/>
+    </radialGradient>
+    <radialGradient id="gPetalInnerD" cx="44%" cy="36%" r="68%">
+      <stop offset="0%"   stop-color="#8C1526"/>
+      <stop offset="55%"  stop-color="#66101C"/>
+      <stop offset="100%" stop-color="#38050D"/>
+    </radialGradient>
+    <linearGradient id="gLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#8C9C7E"/>
+      <stop offset="100%" stop-color="#5B6B50"/>
+    </linearGradient>
+    <linearGradient id="gStem" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#7E8E72"/>
+      <stop offset="100%" stop-color="#5B6B50"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Blush rose bloom -->
+  <symbol id="rose" viewBox="0 0 100 100">
+    <g fill="url(#gPetalOuter)">
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(72 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(144 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(216 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(288 50 50)"/>
+    </g>
+    <g fill="url(#gPetalInner)">
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(36 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(108 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(180 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(252 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(324 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+    </g>
+    <path d="M50 62c-6.6 0-12-5.4-12-12s5.4-12 12-12 14 5.4 14 14-6.3 16-16 16"
+          fill="none" stroke="#8C1526" stroke-width="2.1" stroke-linecap="round" opacity=".5"/>
+    <circle cx="50" cy="50" r="3.4" fill="#7C1223" opacity=".55"/>
+  </symbol>
+
+  <!-- Deeper rose bloom -->
+  <symbol id="rose-deep" viewBox="0 0 100 100">
+    <g fill="url(#gPetalOuterD)">
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(72 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(144 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(216 50 50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(288 50 50)"/>
+    </g>
+    <g fill="url(#gPetalInnerD)">
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(36 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(108 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(180 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(252 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+      <path d="M50 54C35 50 26 33 34 20C41 9 59 9 66 20C74 33 65 50 50 54Z" transform="rotate(324 50 50) translate(50 50) scale(.62) translate(-50 -50)"/>
+    </g>
+    <path d="M50 62c-6.6 0-12-5.4-12-12s5.4-12 12-12 14 5.4 14 14-6.3 16-16 16"
+          fill="none" stroke="#560B16" stroke-width="2.1" stroke-linecap="round" opacity=".55"/>
+    <circle cx="50" cy="50" r="3.4" fill="#4A0B14" opacity=".6"/>
+  </symbol>
+
+  <!-- Bud -->
+  <symbol id="bud" viewBox="0 0 100 100">
+    <path d="M50 14c14 6 22 20 22 34 0 18-10 30-22 30S28 66 28 48c0-14 8-28 22-34z" fill="url(#gPetalOuter)"/>
+    <path d="M50 20c8 6 12 17 12 28s-5 20-12 24c-7-4-12-13-12-24s4-22 12-28z" fill="url(#gPetalInner)" opacity=".85"/>
+    <path d="M30 56c6 14 14 20 20 22-10 2-20-4-24-14-2-5 0-8 4-8z" fill="url(#gLeaf)" opacity=".9"/>
+    <path d="M70 56c-6 14-14 20-20 22 10 2 20-4 24-14 2-5 0-8-4-8z" fill="url(#gLeaf)" opacity=".9"/>
+  </symbol>
+
+  <!-- Leaf -->
+  <symbol id="leaf" viewBox="0 0 100 60">
+    <path d="M2 30C22 4 62 0 98 12 76 46 32 56 2 30Z" fill="url(#gLeaf)"/>
+    <path d="M4 30C34 24 68 20 96 12" stroke="#F6EFEA" stroke-width="1.6" fill="none" opacity=".45"/>
+  </symbol>
+</svg>
 
 <div class="aura aura-1"></div>
 <div class="aura aura-2"></div>
@@ -675,6 +818,35 @@ footer{
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
+
+  <!-- rose spray, top-left -->
+  <svg class="spray spray-hero-tl" viewBox="0 0 260 240" aria-hidden="true">
+    <path d="M24 8C58 40 78 84 92 136" stroke="url(#gStem)" stroke-width="2.4" fill="none" opacity=".7"/>
+    <path d="M96 22C120 52 132 92 136 140" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".55"/>
+    <use href="#leaf" x="0" y="0" width="72" height="43" transform="translate(30,96) rotate(24)"/>
+    <use href="#leaf" x="0" y="0" width="62" height="37" transform="translate(122,70) rotate(-38) scale(-1,1)"/>
+    <use href="#leaf" x="0" y="0" width="56" height="34" transform="translate(154,138) rotate(18)"/>
+    <use href="#leaf" x="0" y="0" width="50" height="30" transform="translate(64,158) rotate(52)"/>
+    <use href="#bud"  x="0" y="0" width="40" height="40" transform="translate(150,26) rotate(22)"/>
+    <use href="#rose-deep" x="0" y="0" width="74" height="74" transform="translate(4,4)"/>
+    <use href="#rose" x="0" y="0" width="92" height="92" transform="translate(62,28)"/>
+    <use href="#rose" x="0" y="0" width="58" height="58" transform="translate(30,104)"/>
+    <use href="#rose-deep" x="0" y="0" width="48" height="48" transform="translate(122,118)"/>
+  </svg>
+
+  <!-- rose spray, bottom-right -->
+  <svg class="spray spray-hero-br" viewBox="0 0 260 240" aria-hidden="true">
+    <path d="M30 232C60 196 84 154 100 104" stroke="url(#gStem)" stroke-width="2.4" fill="none" opacity=".7"/>
+    <path d="M108 224C126 186 138 144 142 100" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".55"/>
+    <use href="#leaf" x="0" y="0" width="70" height="42" transform="translate(36,118) rotate(-28)"/>
+    <use href="#leaf" x="0" y="0" width="60" height="36" transform="translate(132,150) rotate(34) scale(-1,1)"/>
+    <use href="#leaf" x="0" y="0" width="52" height="31" transform="translate(150,86) rotate(-14)"/>
+    <use href="#bud"  x="0" y="0" width="38" height="38" transform="translate(160,190) rotate(-20)"/>
+    <use href="#rose" x="0" y="0" width="86" height="86" transform="translate(56,60)"/>
+    <use href="#rose-deep" x="0" y="0" width="66" height="66" transform="translate(8,132)"/>
+    <use href="#rose" x="0" y="0" width="52" height="52" transform="translate(126,108)"/>
+  </svg>
+
   <div class="inf-wrap">
     <svg class="inf" viewBox="0 0 120 64" fill="none" aria-label="Infinity">
       <path class="inf-glow" d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
@@ -704,6 +876,7 @@ footer{
 
 <!-- ═══════════ INVITATION ═══════════ -->
 <div class="section reveal">
+  <svg class="hero-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
   <div class="eyebrow caps caps-sm">Together with their families</div>
   <div class="display it">Wedding Celebration</div>
   <p class="body-copy">
@@ -714,19 +887,31 @@ footer{
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="orn-dot"></span>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true"><use href="#leaf" width="100" height="60"/></svg>
+  <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true" style="transform:scaleX(-1)"><use href="#leaf" width="100" height="60"/></svg>
   <span class="orn-line"></span>
 </div>
 
 <!-- ═══════════ QUOTE ═══════════ -->
 <div class="section reveal">
+  <svg class="spray spray-side spray-quote" viewBox="0 0 180 150" aria-hidden="true">
+    <path d="M10 10C46 34 70 68 84 112" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".5"/>
+    <use href="#leaf" x="0" y="0" width="58" height="35" transform="translate(26,72) rotate(26)"/>
+    <use href="#leaf" x="0" y="0" width="50" height="30" transform="translate(106,48) rotate(-32) scale(-1,1)"/>
+    <use href="#bud"  x="0" y="0" width="30" height="30" transform="translate(110,96)"/>
+    <use href="#rose" x="0" y="0" width="66" height="66" transform="translate(2,0)"/>
+    <use href="#rose-deep" x="0" y="0" width="44" height="44" transform="translate(58,34)"/>
+  </svg>
   <p class="quote">"I have found the one<br>whom my soul loves."</p>
   <div class="quote-src caps caps-sm">Solomon 3:4</div>
 </div>
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="orn-dot"></span>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true"><use href="#leaf" width="100" height="60"/></svg>
+  <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose-deep" width="100" height="100"/></svg>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true" style="transform:scaleX(-1)"><use href="#leaf" width="100" height="60"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -734,6 +919,21 @@ footer{
 <div class="section reveal">
   <div class="eyebrow caps caps-sm">Save the Date</div>
   <div class="date-stage">
+    <svg class="spray-card-a" viewBox="0 0 160 130" aria-hidden="true">
+      <path d="M4 6C36 24 58 50 72 86" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".55"/>
+      <use href="#leaf" x="0" y="0" width="54" height="32" transform="translate(22,62) rotate(28)"/>
+      <use href="#leaf" x="0" y="0" width="46" height="28" transform="translate(92,42) rotate(-30) scale(-1,1)"/>
+      <use href="#bud"  x="0" y="0" width="28" height="28" transform="translate(96,78)"/>
+      <use href="#rose" x="0" y="0" width="58" height="58" transform="translate(0,0)"/>
+      <use href="#rose-deep" x="0" y="0" width="40" height="40" transform="translate(48,26)"/>
+    </svg>
+    <svg class="spray-card-b" viewBox="0 0 160 130" aria-hidden="true">
+      <path d="M4 6C36 24 58 50 72 86" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".55"/>
+      <use href="#leaf" x="0" y="0" width="50" height="30" transform="translate(24,64) rotate(24)"/>
+      <use href="#bud"  x="0" y="0" width="26" height="26" transform="translate(94,74)"/>
+      <use href="#rose" x="0" y="0" width="52" height="52" transform="translate(2,2)"/>
+      <use href="#rose-deep" x="0" y="0" width="36" height="36" transform="translate(46,28)"/>
+    </svg>
     <div class="d-month">October</div>
     <div class="d-number">31</div>
     <div class="d-year">2026</div>
@@ -748,7 +948,9 @@ footer{
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="orn-dot"></span>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true"><use href="#leaf" width="100" height="60"/></svg>
+  <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true" style="transform:scaleX(-1)"><use href="#leaf" width="100" height="60"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -765,7 +967,9 @@ footer{
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="orn-dot"></span>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true"><use href="#leaf" width="100" height="60"/></svg>
+  <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose-deep" width="100" height="100"/></svg>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true" style="transform:scaleX(-1)"><use href="#leaf" width="100" height="60"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -787,12 +991,22 @@ footer{
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="orn-dot"></span>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true"><use href="#leaf" width="100" height="60"/></svg>
+  <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
+  <svg class="orn-leaf" viewBox="0 0 100 60" aria-hidden="true" style="transform:scaleX(-1)"><use href="#leaf" width="100" height="60"/></svg>
   <span class="orn-line"></span>
 </div>
 
 <!-- ═══════════ RSVP ═══════════ -->
 <div class="section reveal">
+  <svg class="spray spray-side spray-rsvp" viewBox="0 0 180 150" aria-hidden="true">
+    <path d="M10 10C46 34 70 68 84 112" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".5"/>
+    <use href="#leaf" x="0" y="0" width="58" height="35" transform="translate(26,72) rotate(26)"/>
+    <use href="#leaf" x="0" y="0" width="50" height="30" transform="translate(106,48) rotate(-32) scale(-1,1)"/>
+    <use href="#bud"  x="0" y="0" width="30" height="30" transform="translate(112,98)"/>
+    <use href="#rose-deep" x="0" y="0" width="62" height="62" transform="translate(2,0)"/>
+    <use href="#rose" x="0" y="0" width="46" height="46" transform="translate(56,34)"/>
+  </svg>
   <div class="eyebrow caps caps-sm">RSVP</div>
   <div class="display">Kindly Respond</div>
   <p class="body-copy" style="margin-top:16px;">The venue will be shared once you respond</p>
@@ -805,15 +1019,15 @@ footer{
       <div style="display:none"><input name="b-field"></div>
 
       <div class="rsvp-field">
-        <label class="rsvp-label">Full Name</label>
+        <label class="rsvp-label" for="inp-name">Full Name</label>
         <input class="rsvp-input" type="text" name="name" id="inp-name" placeholder="Your name" required autocomplete="name">
       </div>
       <div class="rsvp-field">
-        <label class="rsvp-label">Telephone</label>
+        <label class="rsvp-label" for="inp-phone">Telephone</label>
         <input class="rsvp-input" type="tel" name="phone" id="inp-phone" placeholder="Optional" autocomplete="tel">
       </div>
       <div class="rsvp-field">
-        <label class="rsvp-label">Number in Party</label>
+        <label class="rsvp-label" for="inp-guests">Number in Party</label>
         <input class="rsvp-input" type="number" name="guests" id="inp-guests" placeholder="Including yourself" min="1" max="20">
       </div>
 
@@ -845,9 +1059,7 @@ footer{
 
   <!-- SUCCESS -->
   <div id="success-state" class="success-wrap">
-    <svg class="suc-inf" viewBox="0 0 120 64" fill="none">
-      <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
-    </svg>
+    <svg class="suc-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
     <div class="suc-name" id="suc-name">Name</div>
     <div class="suc-sub">Your response has been received</div>
 
@@ -876,12 +1088,23 @@ footer{
 
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer class="reveal">
+  <svg class="spray spray-foot" viewBox="0 0 320 150" aria-hidden="true">
+    <path d="M40 96C86 60 150 44 218 58" stroke="url(#gStem)" stroke-width="2" fill="none" opacity=".5"/>
+    <use href="#leaf" x="0" y="0" width="66" height="40" transform="translate(18,74) rotate(-12)"/>
+    <use href="#leaf" x="0" y="0" width="62" height="37" transform="translate(238,66) rotate(14) scale(-1,1)"/>
+    <use href="#bud"  x="0" y="0" width="34" height="34" transform="translate(246,20)"/>
+    <use href="#bud"  x="0" y="0" width="30" height="30" transform="translate(44,26) scale(-1,1) translate(-30,0)"/>
+    <use href="#rose" x="0" y="0" width="76" height="76" transform="translate(122,10)"/>
+    <use href="#rose-deep" x="0" y="0" width="54" height="54" transform="translate(72,44)"/>
+    <use href="#rose-deep" x="0" y="0" width="50" height="50" transform="translate(190,48)"/>
+  </svg>
+
   <div class="foot-names">Creven &amp; Thuto</div>
   <p class="foot-detail caps caps-sm">31 · October · 2026</p>
   <p class="foot-detail caps caps-sm" style="margin-top:10px;">Bulawayo, Zimbabwe</p>
   <div class="ornament" style="margin-top:36px;">
     <span class="orn-line"></span>
-    <span class="orn-dot"></span>
+    <svg class="orn-rose" viewBox="0 0 100 100" aria-hidden="true"><use href="#rose" width="100" height="100"/></svg>
     <span class="orn-line"></span>
   </div>
   <p class="foot-quote">"I have found the one whom my soul loves" &nbsp;·&nbsp; Solomon 3:4</p>
@@ -890,37 +1113,34 @@ footer{
 <script>
 const VENUE = "Crescent Lifestyle, Bulawayo";
 
-/* ══════ REALISTIC PETALS ══════ */
+/* ══════ FALLING ROSE PETALS ══════ */
 (function(){
   const stage = document.getElementById('petals');
   if(!stage) return;
 
-  // Four petal silhouettes — outer, cupped, curled, small
+  // Petal silhouettes — outer, cupped, curled, small inner
   const shapes = [
-    // broad outer petal with soft notch
     'M50 6C30 14 16 34 16 56c0 22 15 38 34 38s34-16 34-38C84 34 70 14 50 6z',
-    // cupped petal, one edge rolled
     'M50 4C26 16 14 38 18 60c3 20 17 34 32 34s29-14 32-34C86 38 74 16 50 4z',
-    // curled petal, asymmetric
     'M50 5C28 15 14 36 17 58c2 19 16 36 33 36 12 0 22-9 27-22 7-18 2-45-27-67z',
-    // narrower inner petal
     'M50 8C34 20 24 40 26 58c2 17 12 30 24 30s22-13 24-30C76 40 66 20 50 8z'
   ];
 
-  // Rose tones — deep, muted, old-money reds
+  // Rose tones tuned to read against ivory — blush through deep claret
   const tones = [
-    ['#A31E33','#5C0D18','#D9455C'],
-    ['#7A1424','#3E0810','#B02C42'],
-    ['#8E1828','#4A0A14','#C23A50'],
-    ['#611018','#2E060C','#94202F'],
-    ['#B22539','#68101C','#E05468']
+    ['#C4172B','#750A17','#E44C57'],
+    ['#B01226','#5E0B14','#D93A4A'],
+    ['#D12234','#8C1526','#EA5C68'],
+    ['#A31022','#4E070F','#C93040'],
+    ['#8C1526','#3E060E','#B82333'],
+    ['#DC3A4A','#96101F','#F26B76']
   ];
 
-  const N = 20;
+  const N = 34;
   for(let i=0;i<N;i++){
     const t     = tones[i % tones.length];
     const shape = shapes[i % shapes.length];
-    const w     = 13 + Math.random()*15;      // 13–28px
+    const w     = 12 + Math.random()*17;      // 12–29px
     const depth = Math.random();               // 0 far, 1 near
     const id    = 'pg'+i;
 
@@ -931,7 +1151,7 @@ const VENUE = "Crescent Lifestyle, Bulawayo";
     cell.style.height          = (w*1.22) + 'px';
     cell.style.animationDuration = (13 + Math.random()*13) + 's';
     cell.style.animationDelay    = (Math.random()*22) + 's';
-    cell.style.opacity         = (0.34 + depth*0.5).toFixed(2);
+    cell.style.opacity         = (0.45 + depth*0.45).toFixed(2);
     cell.style.filter          = depth < 0.3 ? 'blur(1.6px)' : (depth < 0.6 ? 'blur(.5px)' : 'none');
 
     const spin = document.createElement('div');
@@ -948,17 +1168,15 @@ const VENUE = "Crescent Lifestyle, Bulawayo";
             '<stop offset="100%" stop-color="'+t[1]+'"/>' +
           '</linearGradient>' +
           '<radialGradient id="'+id+'s" cx="34%" cy="24%" r="72%">' +
-            '<stop offset="0%"   stop-color="#fff" stop-opacity=".3"/>' +
+            '<stop offset="0%"   stop-color="#fff" stop-opacity=".26"/>' +
             '<stop offset="60%"  stop-color="#fff" stop-opacity="0"/>' +
           '</radialGradient>' +
         '</defs>' +
         '<path d="'+shape+'" fill="url(#'+id+')"/>' +
         '<path d="'+shape+'" fill="url(#'+id+'s)"/>' +
-        // central vein
-        '<path d="M50 12C46 34 45 60 50 92" stroke="'+t[1]+'" stroke-width="1.1" fill="none" opacity=".38"/>' +
-        // side veins
-        '<path d="M50 30C42 42 38 58 40 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".22"/>' +
-        '<path d="M50 30C58 42 62 58 60 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".22"/>' +
+        '<path d="M50 12C46 34 45 60 50 92" stroke="'+t[1]+'" stroke-width="1.1" fill="none" opacity=".34"/>' +
+        '<path d="M50 30C42 42 38 58 40 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".2"/>' +
+        '<path d="M50 30C58 42 62 58 60 78" stroke="'+t[1]+'" stroke-width=".7" fill="none" opacity=".2"/>' +
       '</svg>';
 
     cell.appendChild(spin);
