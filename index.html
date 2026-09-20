@@ -434,6 +434,10 @@ body{
   transition:border-color .6s,color .6s;
 }
 .venue-lock:hover{border-color:var(--rose-soft);color:var(--claret);}
+.adults-note{
+  margin-top:20px;color:var(--claret);
+  font-size:12px;letter-spacing:.2em;line-height:1.9;
+}
 
 /* ═══════ COUNTDOWN ═══════ */
 .cd-grid{
@@ -1013,6 +1017,7 @@ body.gated{overflow:hidden;}
   </div>
   <div class="venue-line">Bulawayo, Zimbabwe</div>
   <div class="venue-lock">Venue announced on the day of the wedding</div>
+  <div class="adults-note caps caps-sm">An adults-only celebration · Strictly no children</div>
 </div>
 
 <div class="ornament reveal">
@@ -1089,31 +1094,9 @@ body.gated{overflow:hidden;}
         <label class="rsvp-label" for="inp-email">Email</label>
         <input class="rsvp-input" type="email" name="email" id="inp-email" placeholder="So we can send your confirmation" autocomplete="email" required>
       </div>
-      <div class="rsvp-field">
-        <label class="rsvp-label" for="inp-guests">Number in Party</label>
-        <input class="rsvp-input" type="number" name="guests" id="inp-guests" placeholder="Including yourself" min="1" max="20">
-      </div>
-
       <div class="rsvp-lock">Venue announced on the day of the wedding</div>
       <button type="submit" class="rsvp-btn" id="rsvp-btn"><span>Confirm</span></button>
     </form>
-
-    <p class="gc-note"><span id="gc-num">—</span> attending</p>
-    <div style="text-align:center;">
-      <button class="guest-toggle" id="guest-toggle" type="button">View guest list</button>
-    </div>
-  </div>
-
-  <!-- GUEST LIST -->
-  <div class="guest-panel" id="guest-panel">
-    <div class="guest-inner">
-      <div class="guest-head">
-        <span class="gh-title">Guest List</span>
-        <span class="gh-count" id="gl-count">0 confirmed</span>
-      </div>
-      <div id="guest-rows"></div>
-      <p class="guest-note">Names appear here as guests respond on this device</p>
-    </div>
   </div>
 
   <!-- SUCCESS -->
@@ -1443,9 +1426,9 @@ const KEY='ct_rsvps_oct2026';
 let editIndex=null;
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch{return[];}}
 function persist(l){try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
-function saveRsvp(name,phone,email,guests){
+function saveRsvp(name,phone,email){
   const l=load();
-  const entry={name,phone:phone||'',email:email||'',guests:guests||'1',t:Date.now()};
+  const entry={name,phone:phone||'',email:email||'',t:Date.now()};
   if(editIndex!==null&&l[editIndex]){
     entry.t=l[editIndex].t; entry.edited=Date.now(); l[editIndex]=entry;
   }else{
@@ -1453,32 +1436,6 @@ function saveRsvp(name,phone,email,guests){
   }
   persist(l);
 }
-function totalGuests(){return load().reduce((s,g)=>s+(parseInt(g.guests)||1),0);}
-function esc(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-
-function renderGuests(){
-  const list=load();
-  const rows=document.getElementById('guest-rows');
-  const gcEl=document.getElementById('gc-num');
-  const glc =document.getElementById('gl-count');
-  if(gcEl) gcEl.textContent=totalGuests()||'—';
-  if(glc)  glc.textContent =list.length+' confirmed';
-  if(!rows) return;
-  if(!list.length){rows.innerHTML='<p class="guest-empty">No responses yet.</p>';return;}
-  rows.innerHTML=list.map((g,i)=>{
-    const n=parseInt(g.guests)||1;
-    return '<div class="guest-row" style="animation-delay:'+(i*0.05)+'s">'+
-      '<div class="gr-left">'+
-        '<span class="gr-idx">'+String(i+1).padStart(2,'0')+'</span>'+
-        '<span class="gr-name">'+esc(g.name)+'</span>'+
-      '</div><div class="gr-actions">'+
-        '<span class="gr-guests">'+(n>1?n+' guests':'1 guest')+'</span>'+
-        '<button class="gr-edit" data-edit="'+i+'" type="button">Edit</button>'+
-        '<button class="gr-del" data-del="'+i+'" type="button">Remove</button>'+
-      '</div></div>';
-  }).join('');
-}
-renderGuests();
 
 /* ══════ ELEMENTS ══════ */
 const form    = document.getElementById('rsvp-form');
@@ -1504,7 +1461,6 @@ function openEditor(idx){
   document.getElementById('inp-name').value  =g.name  ||'';
   document.getElementById('inp-phone').value =g.phone ||'';
   document.getElementById('inp-email').value =g.email ||'';
-  document.getElementById('inp-guests').value=g.guests||'';
   if(flagEl) flagEl.classList.add('show');
   btn.disabled=false;
   btn.querySelector('span').textContent='Update';
@@ -1528,7 +1484,6 @@ function deleteRsvp(idx){
     if(editIndex===idx) editIndex=null;
     else if(editIndex>idx) editIndex-=1;
   }
-  renderGuests();
 }
 document.addEventListener('click',e=>{
   const b=e.target.closest('.gr-del');
@@ -1566,7 +1521,7 @@ if(withdrawBtn){
     let idx=editIndex;
     if(idx===null){const l=load(); if(!l.length) return; idx=l.length-1;}
     deleteRsvp(idx); editIndex=null;
-    ['inp-name','inp-phone','inp-email','inp-guests'].forEach(i=>document.getElementById(i).value='');
+    ['inp-name','inp-phone','inp-email'].forEach(i=>document.getElementById(i).value='');
     if(flagEl) flagEl.classList.remove('show');
     btn.disabled=false; btn.querySelector('span').textContent='Confirm';
     armed=false; withdrawBtn.textContent='Withdraw my response';
@@ -1575,17 +1530,14 @@ if(withdrawBtn){
 }
 
 /* ══════ THE MESSAGE THE GUEST SENDS YOU ══════ */
-function coupleMessage(name,guests){
-  const n=parseInt(guests)||1;
-  const party=n>1?(n+' of us will be there')
-                 :'I will be there';
+function coupleMessage(name){
   return 'Hello Thuto and Creven — it\'s '+name+'. '
-       + 'I\'ve just confirmed on your wedding website that '+party+' on '
+       + 'I\'ve just confirmed on your wedding website that I will be there on '
        + CONFIG.date+'. Thank you for inviting me. Congratulations to you both.';
 }
-function waLink(name,guests){
+function waLink(name){
   return 'https://wa.me/'+CONFIG.coupleWhatsApp
-       + '?text='+encodeURIComponent(coupleMessage(name,guests));
+       + '?text='+encodeURIComponent(coupleMessage(name));
 }
 
 /* ══════ SUBMIT ══════ */
@@ -1608,7 +1560,6 @@ form.addEventListener('submit',async e=>{
   const name  =document.getElementById('inp-name').value.trim();
   const phone =document.getElementById('inp-phone').value.trim();
   const email =document.getElementById('inp-email').value.trim();
-  const guests=document.getElementById('inp-guests').value.trim();
 
   if(!name){showError('Please tell us your name');document.getElementById('inp-name').focus();return;}
   if(!phone){showError('We need a phone number to reach you');document.getElementById('inp-phone').focus();return;}
@@ -1618,8 +1569,7 @@ form.addEventListener('submit',async e=>{
   btn.disabled=true;
   btn.querySelector('span').textContent = wasEditing?'Updating':'Confirming';
 
-  saveRsvp(name,phone,email,guests);
-  renderGuests();
+  saveRsvp(name,phone,email);
   if(flagEl) flagEl.classList.remove('show');
 
   // Send to the Worker, which emails the guest their confirmation.
@@ -1630,7 +1580,7 @@ form.addEventListener('submit',async e=>{
       const r=await fetch(CONFIG.api,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name,phone,email,guests:guests||'1',editing:wasEditing})
+        body:JSON.stringify({name,phone,email,editing:wasEditing})
       });
       emailed=r.ok;
     }catch(_){ emailed=false; }
@@ -1638,7 +1588,7 @@ form.addEventListener('submit',async e=>{
 
   // Prepare the WhatsApp hand-off
   const waBtn=document.getElementById('wa-btn');
-  if(waBtn) waBtn.href=waLink(name,guests);
+  if(waBtn) waBtn.href=waLink(name);
   const waNote=document.getElementById('wa-note');
   if(waNote){
     waNote.textContent = emailed
@@ -1670,17 +1620,6 @@ if(waBtnEl){
       const lbl=document.getElementById('wa-btn-label');
       if(lbl) lbl.textContent='Send again on WhatsApp';
     },1200);
-  });
-}
-
-/* ══════ GUEST PANEL ══════ */
-const gToggle=document.getElementById('guest-toggle');
-const gPanel =document.getElementById('guest-panel');
-if(gToggle&&gPanel){
-  gToggle.addEventListener('click',()=>{
-    const open=gPanel.classList.toggle('open');
-    gToggle.textContent=open?'Hide guest list':'View guest list';
-    if(open) renderGuests();
   });
 }
 
