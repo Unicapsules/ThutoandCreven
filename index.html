@@ -10,7 +10,7 @@
 <meta property="og:description" content="Wedding Celebration · Bulawayo, Zimbabwe · 10:30AM till late.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='84'>∞</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -248,31 +248,57 @@ body{
   opacity:0;animation:rise 1.4s 1.6s ease forwards;
 }
 
+/* ── monogram C | T with a heart (from the card) ── */
+.monogram{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  margin-bottom:14px;
+  opacity:0;animation:rise 1.4s .3s ease forwards;
+}
+.mg-l{
+  font-family:'Cormorant',serif;font-weight:400;
+  font-size:clamp(26px,6vw,40px);letter-spacing:.06em;
+  color:var(--ink);line-height:1;padding-left:.06em;
+}
+.mg-bar{width:1px;height:clamp(30px,7vw,46px);background:var(--gold-hair);}
+.mg-heart{
+  width:16px;height:16px;display:block;margin:0 auto 30px;
+  fill:var(--claret);
+  opacity:0;animation:rise 1.4s .7s ease forwards;
+}
+.eyebrow-invite{
+  color:var(--gold);margin-bottom:32px;
+  opacity:0;animation:rise 1.4s 1.1s ease forwards;
+}
+
 .names{
-  font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-style:italic;
-  font-size:clamp(38px,9.5vw,72px);
-  line-height:1.14;color:var(--ink);
+  font-family:'Pinyon Script','Cormorant Garamond',cursive,serif;
+  font-weight:400;
+  font-size:clamp(52px,14vw,104px);
+  line-height:1.05;color:var(--ink);
   letter-spacing:.01em;
 }
-.name-line{display:block;overflow:hidden;padding:0 2px;}
+.name-line{display:block;overflow:visible;padding:0 6px;}
 .name-line > i{
-  display:inline-block;font-style:italic;
-  opacity:0;transform:translateY(102%);
+  display:inline-block;font-style:normal;
+  opacity:0;transform:translateY(40%);
   animation:slideUp 1.6s cubic-bezier(.16,1,.3,1) forwards;
 }
-.name-1 > i{animation-delay:1.75s;}
-.name-2 > i{animation-delay:2.15s;}
+.name-1 > i{animation-delay:1.4s;}
+.name-2 > i{animation-delay:1.8s;}
 @keyframes slideUp{to{opacity:1;transform:translateY(0);}}
 
 .amp{
   display:block;
-  font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-style:italic;
-  font-size:clamp(19px,4vw,30px);
+  font-family:'Pinyon Script','Cormorant Garamond',cursive,serif;
+  font-weight:400;
+  font-size:clamp(30px,7vw,52px);
   color:var(--claret);
-  margin:14px 0;
-  opacity:0;animation:rise 1.6s 2s ease forwards;
+  margin:2px 0;line-height:1;
+  opacity:0;animation:rise 1.6s 1.7s ease forwards;
+}
+.hero-invite{
+  color:var(--ink-faint);margin-top:22px;
+  opacity:0;animation:rise 1.6s 3.2s ease forwards;
 }
 
 .hairline{
@@ -284,10 +310,24 @@ body{
 @keyframes drawDown{to{transform:scaleY(1);}}
 
 .hero-meta{
-  color:var(--ink-faint);
+  color:var(--ink-faint);margin-top:34px;
   opacity:0;animation:rise 1.6s 3s ease forwards;
 }
 .hero-meta b{font-weight:500;color:var(--ink-dim);}
+
+/* ── heart divider · framed card · closing tagline ── */
+.orn-heart{width:15px;height:15px;flex:none;display:block;fill:var(--claret);}
+.foot-tagline{color:var(--gold-dim);margin-bottom:20px;}
+.gate-nochild{
+  color:var(--claret);margin-top:-14px;margin-bottom:34px;
+  letter-spacing:.28em;
+}
+.page-frame{
+  position:fixed;z-index:210;pointer-events:none;
+  inset:clamp(10px,2.4vw,20px);
+  border:1px solid var(--gold-hair);
+  box-shadow:inset 0 0 0 3px rgba(10,7,8,.6), inset 0 0 0 4px var(--gold-hair);
+}
 
 @keyframes rise{
   from{opacity:0;transform:translateY(14px);}
@@ -319,6 +359,7 @@ body{
   align-items:center;text-align:center;
   max-width:640px;margin:0 auto;
 }
+.section:last-of-type{padding-bottom:40px;}   /* tighten the gap under Confirm */
 .eyebrow{color:var(--gold);margin-bottom:24px;}
 
 .display{
@@ -749,7 +790,7 @@ body{
 /* ═══════ FOOTER ═══════ */
 footer{
   position:relative;z-index:3;overflow:hidden;
-  padding:130px 34px 104px;text-align:center;
+  padding:78px 34px 104px;text-align:center;
   border-top:1px solid var(--gold-hair);
   background:var(--paper);
 }
@@ -900,8 +941,9 @@ body.gated{overflow:hidden;}
       <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
     </svg>
     <div class="gate-eyebrow caps caps-sm">Creven &amp; Thuto · By Invitation</div>
-    <h1 class="gate-title" id="gate-title">A private celebration</h1>
+    <h1 class="gate-title" id="gate-title">A private affair</h1>
     <p class="gate-copy">This invitation is reserved for our named guests. Please enter your full name as it appears on your invitation.</p>
+    <p class="gate-nochild caps caps-sm">Strictly no children</p>
 
     <form id="gate-form" autocomplete="off" novalidate>
       <label class="rsvp-label" for="gate-name">Your full name</label>
@@ -927,6 +969,7 @@ body.gated{overflow:hidden;}
   </div>
 </div>
 
+<div class="page-frame" aria-hidden="true"></div>
 <div id="petals"></div>
 
 <!-- ═══════════ HERO ═══════════ -->
@@ -938,20 +981,18 @@ body.gated{overflow:hidden;}
 <section class="hero">
 
   <!-- rose spray, top-left -->
-  <span class="deco hero-corner corner-tl" aria-hidden="true"></span>
-  <span class="deco hero-corner corner-br" aria-hidden="true"></span>
 
   <!-- rose spray, bottom-right -->
   
 
-  <div class="inf-wrap">
-    <svg class="inf" viewBox="0 0 120 64" fill="none" aria-label="Infinity">
-      <path class="inf-glow" d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
-      <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
-    </svg>
+  <div class="monogram" aria-label="C and T">
+    <span class="mg-l">C</span>
+    <span class="mg-bar"></span>
+    <span class="mg-l">T</span>
   </div>
+  <svg class="mg-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
 
-  <div class="mono caps caps-sm">C &nbsp;·&nbsp; T</div>
+  <div class="eyebrow-invite caps caps-sm">Together with their families</div>
 
   <div class="names">
     <span class="name-line name-1"><i>Creven Matonisa</i></span>
@@ -959,11 +1000,10 @@ body.gated{overflow:hidden;}
     <span class="name-line name-2"><i>Thuto Obuseng</i></span>
   </div>
 
-  <div class="hairline"></div>
-
   <div class="hero-meta caps caps-sm">
     <b>Saturday</b> &nbsp;·&nbsp; 31 October 2026 &nbsp;·&nbsp; <b>Bulawayo</b>
   </div>
+  <div class="hero-invite caps caps-sm">Strictly by invitation</div>
 
   <div class="scroll-cue caps" style="font-size:11px;">
     <div class="sc-line"></div>
@@ -984,20 +1024,19 @@ body.gated{overflow:hidden;}
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="deco orn-rose" aria-hidden="true"></span>
+  <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
   <span class="orn-line"></span>
 </div>
 
 <!-- ═══════════ QUOTE ═══════════ -->
 <div class="section reveal">
-  <span class="deco side-stem side-right" aria-hidden="true"></span>
   <p class="quote">"I have found the one<br>whom my soul loves."</p>
   <div class="quote-src caps caps-sm">Solomon 3:4</div>
 </div>
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="deco orn-rose" aria-hidden="true"></span>
+  <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -1005,8 +1044,6 @@ body.gated{overflow:hidden;}
 <div class="section reveal">
   <div class="eyebrow caps caps-sm">Save the Date</div>
   <div class="date-stage">
-    <span class="deco card-rose" aria-hidden="true"></span>
-    <span class="deco card-bouquet" aria-hidden="true"></span>
     <div class="d-month">October</div>
     <div class="d-number">31</div>
     <div class="d-year">2026</div>
@@ -1017,12 +1054,11 @@ body.gated{overflow:hidden;}
   </div>
   <div class="venue-line">Bulawayo, Zimbabwe</div>
   <div class="venue-lock">Venue announced on the day of the wedding</div>
-  <div class="adults-note caps caps-sm">An adults-only celebration · Strictly no children</div>
 </div>
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="deco orn-rose" aria-hidden="true"></span>
+  <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -1039,7 +1075,7 @@ body.gated{overflow:hidden;}
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="deco orn-rose" aria-hidden="true"></span>
+  <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
   <span class="orn-line"></span>
 </div>
 
@@ -1061,13 +1097,12 @@ body.gated{overflow:hidden;}
 
 <div class="ornament reveal">
   <span class="orn-line"></span>
-  <span class="deco orn-rose" aria-hidden="true"></span>
+  <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
   <span class="orn-line"></span>
 </div>
 
 <!-- ═══════════ RSVP ═══════════ -->
 <div class="section reveal">
-  <span class="deco side-stem side-left" aria-hidden="true"></span>
   <div class="eyebrow caps caps-sm">RSVP</div>
   <div class="display">Kindly Respond</div>
   <p class="body-copy" style="margin-top:16px;">Kindly confirm below. Venue details will be<br>announced on the day of the wedding</p>
@@ -1144,9 +1179,10 @@ body.gated{overflow:hidden;}
   <p class="foot-detail caps caps-sm" style="margin-top:10px;">Bulawayo, Zimbabwe</p>
   <div class="ornament" style="margin-top:36px;">
     <span class="orn-line"></span>
-    <span class="deco orn-rose" aria-hidden="true"></span>
+    <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
     <span class="orn-line"></span>
   </div>
+  <p class="foot-tagline caps caps-sm">A new chapter · The same love</p>
   <p class="foot-quote">"I have found the one whom my soul loves" &nbsp;·&nbsp; Solomon 3:4</p>
 </footer>
 
