@@ -782,8 +782,90 @@ footer > *:not(.foot-bouquet){position:relative;z-index:2;}
   #petals{display:none;}
 }
 
+/* ═══════ INVITATION GATE ═══════ */
+#gate{
+  position:fixed;inset:0;z-index:200;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(24px,6vw,48px);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(140,21,38,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(197,165,114,.12) 0%, transparent 60%),
+    #0A0708;
+  transition:opacity .9s cubic-bezier(.16,1,.3,1);
+}
+#gate.unlocking{opacity:0;pointer-events:none;}
+body.gated{overflow:hidden;}
+.gate-corner{
+  position:absolute;z-index:0;
+  width:clamp(180px,40vw,340px);aspect-ratio:700/594;
+  background-image:var(--r-bouquet);
+  -webkit-mask-image:radial-gradient(ellipse 96% 96% at 20% 22%,#000 54%,transparent 93%);
+          mask-image:radial-gradient(ellipse 96% 96% at 20% 22%,#000 54%,transparent 93%);
+}
+.gate-tl{top:-64px;left:-80px;transform:rotate(-14deg);}
+.gate-br{bottom:-70px;right:-84px;transform:rotate(166deg);}
+.gate-inner{
+  position:relative;z-index:2;width:100%;max-width:430px;text-align:center;
+}
+.gate-inf{width:78px;height:42px;margin:0 auto 26px;display:block;}
+.gate-inf path{
+  fill:none;stroke:var(--gold);stroke-width:1.3;stroke-linecap:round;
+  stroke-dasharray:250;stroke-dashoffset:250;
+  animation:infTrace 3s .3s cubic-bezier(.45,0,.15,1) forwards;
+}
+.gate-eyebrow{color:var(--gold);margin-bottom:20px;}
+.gate-title{
+  font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;
+  font-size:clamp(32px,8vw,50px);line-height:1.12;color:var(--ink);
+  margin-bottom:20px;text-wrap:balance;
+}
+.gate-copy{
+  font-size:clamp(15px,3.6vw,17px);color:var(--ink-dim);line-height:1.75;
+  max-width:360px;margin:0 auto 34px;
+}
+#gate-form{display:flex;flex-direction:column;gap:0;text-align:left;}
+#gate-form .rsvp-label{margin-bottom:12px;}
+#gate-form .rsvp-input{margin-bottom:30px;}
+#gate-form .rsvp-btn{width:100%;}
+.gate-suggest{
+  margin-top:30px;padding:22px 20px;
+  border:1px solid var(--gold-hair);
+  background:linear-gradient(180deg,rgba(140,21,38,.12),transparent 80%),rgba(255,255,255,.02);
+}
+.gate-suggest-q{
+  font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:18px;
+}
+.gate-suggest-q em{font-style:italic;color:var(--claret);font-weight:500;}
+.gate-suggest-actions{display:flex;gap:12px;}
+.gate-yes,.gate-no{
+  flex:1;padding:14px 10px;cursor:pointer;
+  font-family:'Cormorant',serif;font-weight:600;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  transition:background .5s,color .5s,border-color .5s;
+}
+.gate-yes{background:var(--oxblood);color:#FFF;border:1px solid var(--oxblood);}
+.gate-yes:hover{background:var(--claret);border-color:var(--claret);}
+.gate-no{background:transparent;color:var(--ink-faint);border:1px solid var(--ink-whisper);}
+.gate-no:hover{color:var(--ink);border-color:var(--gold-hair);}
+.gate-error{
+  margin-top:26px;padding:16px 18px;
+  border:1px solid rgba(216,57,75,.34);background:rgba(140,21,38,.10);
+  font-size:15px;line-height:1.6;color:var(--ink-dim);
+}
+.gate-help{
+  margin-top:34px;font-size:13px;letter-spacing:.02em;color:var(--ink-faint);line-height:1.7;
+}
+.gate-help a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-hair);}
+.gate-help a:hover{color:var(--claret);}
+@media(prefers-reduced-motion:reduce){
+  .gate-inf path{stroke-dashoffset:0;animation:none;}
+  #gate{transition:none;}
+}
+
 @media(max-width:440px){
   .section{padding:82px 26px;}
+  .gate-tl{top:-44px;left:-62px;}
+  .gate-br{bottom:-48px;right:-64px;}
   .inf-wrap{margin-bottom:20px;}
   .inf{width:78px;height:42px;}
   .mono{margin-bottom:20px;}
@@ -803,6 +885,43 @@ footer > *:not(.foot-bouquet){position:relative;z-index:2;}
 </style>
 </head>
 <body>
+
+<!-- ═══════════ INVITATION GATE ═══════════ -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <span class="deco gate-corner gate-tl" aria-hidden="true"></span>
+  <span class="deco gate-corner gate-br" aria-hidden="true"></span>
+
+  <div class="gate-inner">
+    <svg class="gate-inf" viewBox="0 0 120 64" fill="none" aria-hidden="true">
+      <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
+    </svg>
+    <div class="gate-eyebrow caps caps-sm">Creven &amp; Thuto · By Invitation</div>
+    <h1 class="gate-title" id="gate-title">A private celebration</h1>
+    <p class="gate-copy">This invitation is reserved for our named guests. Please enter your full name as it appears on your invitation.</p>
+
+    <form id="gate-form" autocomplete="off" novalidate>
+      <label class="rsvp-label" for="gate-name">Your full name</label>
+      <input class="rsvp-input" type="text" id="gate-name" name="gate-name" placeholder="First and last name" autocomplete="name" autocapitalize="words">
+      <button type="submit" class="rsvp-btn" id="gate-btn"><span>Find my invitation</span></button>
+    </form>
+
+    <!-- did-you-mean suggestion -->
+    <div class="gate-suggest" id="gate-suggest" hidden>
+      <p class="gate-suggest-q">Did you mean <em id="gate-suggest-name">—</em>?</p>
+      <div class="gate-suggest-actions">
+        <button type="button" class="gate-yes" id="gate-yes">Yes, that's me</button>
+        <button type="button" class="gate-no" id="gate-no">No, try again</button>
+      </div>
+    </div>
+
+    <!-- not found -->
+    <p class="gate-error" id="gate-error" role="alert" hidden></p>
+
+    <p class="gate-help">Trouble finding your name? Message
+      <a href="https://wa.me/26776668180" target="_blank" rel="noopener">Thuto</a> or
+      <a href="https://wa.me/263772873466" target="_blank" rel="noopener">Creven</a>.</p>
+  </div>
+</div>
 
 <div id="petals"></div>
 
@@ -1065,8 +1184,155 @@ const CONFIG = {
   // it lives on the server and goes out on release day.
   date: 'Saturday 31 October 2026',
   time: '10:30am till late',
-  city: 'Bulawayo, Zimbabwe'
+  city: 'Bulawayo, Zimbabwe',
+
+  // ── GUEST LIST GATE ──
+  // The list of invited names lives in guests.csv, next to this file
+  // in your GitHub repo. Edit that file to add or remove guests —
+  // one name per line, no need to touch this HTML.
+  guestListUrl: 'guests.csv'
 };
+
+/* ══════════════════════════════════════════════════════════
+   INVITATION GATE — name check against the guest list
+   ══════════════════════════════════════════════════════════ */
+(function(){
+  const gate = document.getElementById('gate');
+  if(!gate) return;
+
+  const UNLOCK_KEY = 'ct_gate_ok';
+  const form   = document.getElementById('gate-form');
+  const input  = document.getElementById('gate-name');
+  const btn    = document.getElementById('gate-btn');
+  const errEl  = document.getElementById('gate-error');
+  const sugg   = document.getElementById('gate-suggest');
+  const suggNm = document.getElementById('gate-suggest-name');
+
+  // already let in on this device? open straight away.
+  let already = '';
+  try{ already = localStorage.getItem(UNLOCK_KEY) || ''; }catch(_){}
+  if(already){ open(already, true); return; }
+
+  document.body.classList.add('gated');
+
+  /* ── name normalising + fuzzy matching ── */
+  function norm(s){
+    return String(s).toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g,'')  // strip accents
+      .replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();
+  }
+  function lev(a,b){
+    const m=a.length,n=b.length;
+    if(!m) return n; if(!n) return m;
+    let prev=Array.from({length:n+1},(_,i)=>i), cur=new Array(n+1);
+    for(let i=1;i<=m;i++){
+      cur[0]=i;
+      for(let j=1;j<=n;j++){
+        const cost=a[i-1]===b[j-1]?0:1;
+        cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
+      }
+      [prev,cur]=[cur,prev];
+    }
+    return prev[n];
+  }
+  function tokenSim(a,b){
+    if(a===b) return 1;
+    if(a.length>=3 && b.length>=3 && (a.startsWith(b)||b.startsWith(a))) return .92;
+    return 1 - lev(a,b)/Math.max(a.length,b.length);
+  }
+  function score(inp, g){
+    if(inp===g) return 1;
+    const it=inp.split(' ').filter(Boolean), gt=g.split(' ').filter(Boolean);
+    if(!it.length || !gt.length) return 0;
+    // same tokens in any order → treat as an exact match
+    if(it.length===gt.length && [...it].sort().join(' ')===[...gt].sort().join(' ')) return 1;
+    // both the entered name and the listed name must be well covered,
+    // so a lone surname can't unlock someone else's invitation
+    const cover = (from,to)=> from.reduce((s,t)=>
+      s + to.reduce((b,u)=>Math.max(b,tokenSim(t,u)),0), 0) / from.length;
+    return Math.min(cover(it,gt), cover(gt,it));
+  }
+
+  /* ── load the guest list ── */
+  let GUESTS = [];   // [{raw, n}]
+  function parseCsv(text){
+    return text.split(/\r?\n/).map(l=>l.trim())
+      .filter(l=>l && !l.startsWith('#'))
+      .map(l=>l.split(',')[0].trim().replace(/^["']|["']$/g,''))
+      .filter(name=>name && norm(name)!=='guest name' && norm(name)!=='name');
+  }
+  function ready(list){
+    GUESTS = list.map(raw=>({raw, n:norm(raw)}));
+    btn.disabled=false;
+    btn.querySelector('span').textContent='Find my invitation';
+  }
+  btn.disabled=true;
+  btn.querySelector('span').textContent='Loading…';
+  fetch(CONFIG.guestListUrl, {cache:'no-store'})
+    .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(t=>ready(parseCsv(t)))
+    .catch(()=>{
+      // if the list can't be reached, don't silently lock everyone out —
+      // say so and point them to a person.
+      showError('We could not load the guest list just now. Please refresh, '
+        + 'or message Thuto or Creven and we will let you in.');
+      btn.disabled=false;
+      btn.querySelector('span').textContent='Try again';
+    });
+
+  /* ── UI helpers ── */
+  function showError(msg){
+    sugg.hidden=true;
+    errEl.textContent=msg; errEl.hidden=false;
+  }
+  function clearMsgs(){ errEl.hidden=true; sugg.hidden=true; }
+
+  let pending=null;  // the raw name behind a "did you mean" suggestion
+
+  function attempt(){
+    clearMsgs();
+    const q=norm(input.value);
+    if(!q){ input.focus(); return; }
+    if(!GUESTS.length){
+      showError('The guest list is still loading — please try once more in a moment.');
+      return;
+    }
+    let best=null, bestScore=0;
+    for(const g of GUESTS){
+      const s=score(q, g.n);
+      if(s>bestScore){ bestScore=s; best=g; }
+    }
+    if(best && bestScore>=0.999){
+      open(best.raw);                         // confident match — let them in
+    }else if(best && bestScore>=0.70){
+      pending=best.raw;                       // close — confirm first
+      suggNm.textContent=best.raw;
+      sugg.hidden=false;
+    }else{
+      showError('We could not find that name on the guest list. '
+        + 'Please check the spelling, or use your full name as it appears on your invitation.');
+    }
+  }
+
+  form.addEventListener('submit',e=>{ e.preventDefault(); attempt(); });
+  document.getElementById('gate-yes').addEventListener('click',()=>{ if(pending) open(pending); });
+  document.getElementById('gate-no').addEventListener('click',()=>{
+    clearMsgs(); pending=null; input.value=''; input.focus();
+  });
+  input.addEventListener('input',()=>{ if(!sugg.hidden||!errEl.hidden) clearMsgs(); });
+
+  /* ── grant access ── */
+  function open(name, instant){
+    try{ localStorage.setItem(UNLOCK_KEY, name); }catch(_){}
+    // greet them on the RSVP form if it's still empty
+    const rsvpName=document.getElementById('inp-name');
+    if(rsvpName && !rsvpName.value) rsvpName.value=name;
+    document.body.classList.remove('gated');
+    if(instant){ gate.remove(); return; }
+    gate.classList.add('unlocking');
+    setTimeout(()=>gate.remove(), 950);
+  }
+})();
 
 /* ══════ FALLING ROSE PETALS ══════ */
 (function(){
