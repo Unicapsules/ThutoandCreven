@@ -24,8 +24,8 @@
 
   /* ivory, kept bright enough to read comfortably */
   --ink:#F2EDE4;
-  --ink-dim:rgba(242,237,228,.84);
-  --ink-faint:rgba(242,237,228,.66);
+  --ink-dim:rgba(242,237,228,.92);
+  --ink-faint:rgba(242,237,228,.74);
   --ink-whisper:rgba(242,237,228,.22);
   --hair:rgba(242,237,228,.12);
 
@@ -36,8 +36,8 @@
   --rose-soft:#D8394B;
 
   /* champagne */
-  --gold:#DAD2D2;
-  --gold-dim:#C6BDBD;
+  --gold:#ECE4E4;
+  --gold-dim:#DAD2D2;
   --gold-hair:rgba(242,237,228,.15);
 }
 
@@ -320,7 +320,7 @@ body{
 /* ═══════ SECTIONS ═══════ */
 .section{
   position:relative;z-index:3;overflow:hidden;
-  padding:104px 34px;
+  padding:60px 34px;
   display:flex;flex-direction:column;
   align-items:center;text-align:center;
   max-width:640px;margin:0 auto;
@@ -428,7 +428,7 @@ body{
   font-family:'Cormorant Garamond',serif;
   font-weight:300;font-style:italic;
   font-size:clamp(19px,4.4vw,26px);
-  color:var(--ink-dim);
+  color:var(--ink);
 }
 .venue-lock{
   display:inline-flex;align-items:center;gap:11px;
@@ -876,8 +876,9 @@ body.gated{overflow:hidden;}
 
 /* ═══════ REDESIGN — hero, info, results, letter, music ═══════ */
 .hero-inf{width:92px;height:50px;display:block;margin:0 auto 30px;opacity:0;animation:rise 1.4s .3s ease forwards;}
-.hero-inf path{fill:none;stroke:var(--gold);stroke-width:1.15;stroke-linecap:round;
-  stroke-dasharray:250;stroke-dashoffset:250;animation:infTrace 3s .5s cubic-bezier(.45,0,.15,1) forwards;}
+.hero-inf path{fill:none;stroke:var(--gold);stroke-width:1.3;stroke-linecap:round;
+  stroke-dasharray:55 305;stroke-dashoffset:360;animation:infLoop 4.5s linear infinite;}
+@keyframes infLoop{to{stroke-dashoffset:0;}}
 .hero-invite-line{
   font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
   font-size:clamp(17px,4vw,23px);color:var(--ink-dim);margin-top:16px;
@@ -894,7 +895,7 @@ body.gated{overflow:hidden;}
 .info-block{display:flex;flex-direction:column;gap:8px;min-width:190px;}
 .info-lbl{color:var(--rose);}
 .info-val{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
-  font-size:clamp(18px,4.2vw,23px);color:var(--ink-dim);}
+  font-size:clamp(18px,4.2vw,23px);color:var(--ink);}
 
 /* countdown notes */
 .cd-note{margin-top:22px;font-family:'Cormorant',serif;font-weight:500;font-size:11px;
@@ -1244,7 +1245,18 @@ const CONFIG = {
   // The list of invited names lives in guests.csv, next to this file
   // in your GitHub repo. Edit that file to add or remove guests —
   // one name per line, no need to touch this HTML.
-  guestListUrl: 'guests.csv'
+  guestListUrl: 'guests.csv',
+
+  // ── DOWNLOADABLE INVITATION CARD ──
+  // Put your designed card (from the OpenAI prompt) in the repo and name it
+  // here. When set, the download stamps the guest's name onto that card.
+  // Leave '' to use the built-in generated invitation instead.
+  cardImage: 'invite-card.png',
+  cardNameYPct: 0.205,      // vertical position of the "Dear …," line (0–1)
+  cardNameSizePct: 0.052,   // name size as a fraction of card width
+  cardNameColor: '#F2EDE4',
+  cardNamePrefix: 'Dear ',
+  cardNameSuffix: ','
 };
 
 /* ══════ MUSIC ══════ */
@@ -1623,7 +1635,39 @@ if(dlBtn){
     drawInvitation(name);
   });
 }
+function saveCanvas(c,name){
+  c.toBlob(function(b){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download='Creven-and-Thuto-Invitation-'+String(name).replace(/\s+/g,'-')+'.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  },'image/png');
+}
 function drawInvitation(name){
+  // Preferred: stamp the guest's name onto your designed card image.
+  if(CONFIG.cardImage){
+    const img=new Image();
+    img.onload=function(){
+      const c=document.createElement('canvas');
+      c.width=img.naturalWidth; c.height=img.naturalHeight;
+      const x=c.getContext('2d');
+      x.drawImage(img,0,0);
+      const size=Math.round(c.width*(CONFIG.cardNameSizePct||0.052));
+      x.textAlign='center'; x.textBaseline='alphabetic';
+      x.fillStyle=CONFIG.cardNameColor||'#F2EDE4';
+      x.font='italic 300 '+size+'px Georgia, "Times New Roman", serif';
+      x.fillText((CONFIG.cardNamePrefix||'')+name+(CONFIG.cardNameSuffix||''),
+                 c.width/2, c.height*(CONFIG.cardNameYPct||0.205));
+      saveCanvas(c,name);
+    };
+    img.onerror=function(){ drawGeneratedInvitation(name); };  // fallback if the file is missing
+    img.src=CONFIG.cardImage;
+    return;
+  }
+  drawGeneratedInvitation(name);
+}
+function drawGeneratedInvitation(name){
   const W=1080,H=1528,c=document.createElement('canvas');
   c.width=W;c.height=H;const x=c.getContext('2d');
   x.fillStyle='#0A0708';x.fillRect(0,0,W,H);
