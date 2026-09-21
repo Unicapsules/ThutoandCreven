@@ -1333,11 +1333,15 @@ const CONFIG = {
   // here. When set, the download stamps the guest's name onto that card.
   // Leave '' to use the built-in generated invitation instead.
   cardImage: 'invite-card.png',
-  cardNameYPct: 0.205,      // vertical position of the "Dear …," line (0–1)
-  cardNameSizePct: 0.052,   // name size as a fraction of card width
-  cardNameColor: '#F2EDE4',
-  cardNamePrefix: 'Dear ',
-  cardNameSuffix: ','
+  // The guest's name is stamped into the empty band between the "C | T"
+  // monogram and "TOGETHER WITH THEIR FAMILIES", then downloaded with it.
+  cardNameYPct: 0.170,      // name baseline, as a fraction of card height (0–1)
+  cardNameSizePct: 0.050,   // name size as a fraction of card width
+  cardNameColor: '#F2EDE4', // ivory
+  cardSubText: 'you have been invited',
+  cardSubYPct: 0.206,       // sub-line baseline
+  cardSubSizePct: 0.021,
+  cardSubColor: '#D8394B'   // red
 };
 
 /* ══════ MUSIC ══════ */
@@ -1754,17 +1758,31 @@ function drawInvitation(name){
   // Preferred: stamp the guest's name onto your designed card image.
   if(CONFIG.cardImage){
     const img=new Image();
+    img.crossOrigin='anonymous';
     img.onload=function(){
       const c=document.createElement('canvas');
       c.width=img.naturalWidth; c.height=img.naturalHeight;
       const x=c.getContext('2d');
       x.drawImage(img,0,0);
-      const size=Math.round(c.width*(CONFIG.cardNameSizePct||0.052));
       x.textAlign='center'; x.textBaseline='alphabetic';
+
+      // Guest name — elegant serif, in the band under the "C | T" monogram
+      const nameSize=Math.round(c.width*(CONFIG.cardNameSizePct||0.05));
+      try{x.letterSpacing='0px';}catch(_){}
       x.fillStyle=CONFIG.cardNameColor||'#F2EDE4';
-      x.font='italic 300 '+size+'px Georgia, "Times New Roman", serif';
-      x.fillText((CONFIG.cardNamePrefix||'')+name+(CONFIG.cardNameSuffix||''),
-                 c.width/2, c.height*(CONFIG.cardNameYPct||0.205));
+      x.font='italic 400 '+nameSize+'px Georgia, "Times New Roman", serif';
+      x.fillText(name, c.width/2, c.height*(CONFIG.cardNameYPct||0.170));
+
+      // Sub-line — "you have been invited", small spaced caps
+      if(CONFIG.cardSubText){
+        const subSize=Math.round(c.width*(CONFIG.cardSubSizePct||0.021));
+        try{x.letterSpacing=Math.round(subSize*0.30)+'px';}catch(_){}
+        x.fillStyle=CONFIG.cardSubColor||'#D8394B';
+        x.font='600 '+subSize+'px Georgia, "Times New Roman", serif';
+        x.fillText(String(CONFIG.cardSubText).toUpperCase(),
+                   c.width/2, c.height*(CONFIG.cardSubYPct||0.206));
+        try{x.letterSpacing='0px';}catch(_){}
+      }
       saveCanvas(c,name);
     };
     img.onerror=function(){ drawGeneratedInvitation(name); };  // fallback if the file is missing
