@@ -88,6 +88,31 @@ body{
   0%,100%{opacity:.6;transform:scale(1);}
   50%    {opacity:1;transform:scale(1.12);}
 }
+
+/* ═══════ MORPHING GLOW BLOBS ═══════ */
+.morph{
+  position:fixed;pointer-events:none;z-index:0;
+  filter:blur(48px);mix-blend-mode:screen;opacity:.55;
+  will-change:transform,border-radius;
+}
+.morph-1{top:5%;left:-150px;width:360px;height:360px;
+  background:radial-gradient(circle,rgba(176,31,51,.55),transparent 68%);
+  animation:blobMorph 17s ease-in-out infinite, blobDrift1 25s ease-in-out infinite;}
+.morph-2{bottom:4%;right:-165px;width:420px;height:420px;
+  background:radial-gradient(circle,rgba(216,57,75,.42),transparent 70%);
+  animation:blobMorph 23s ease-in-out infinite reverse, blobDrift2 30s ease-in-out infinite;}
+.morph-3{top:46%;left:34%;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(140,21,38,.4),transparent 72%);
+  animation:blobMorph 20s ease-in-out infinite, blobDrift3 34s ease-in-out infinite;}
+@keyframes blobMorph{
+  0%,100%{border-radius:42% 58% 63% 37% / 41% 44% 56% 59%;}
+  33%    {border-radius:67% 33% 40% 60% / 63% 57% 43% 37%;}
+  66%    {border-radius:38% 62% 51% 49% / 49% 33% 67% 51%;}
+}
+@keyframes blobDrift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(44px,34px) scale(1.16);}}
+@keyframes blobDrift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-48px,-30px) scale(1.12);}}
+@keyframes blobDrift3{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-42%,-58%) scale(1.2);}}
+
 .grain{
   position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.11;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -248,16 +273,32 @@ body{
   font-size:clamp(34px,8vw,60px);
   line-height:1.16;color:var(--ink);
   letter-spacing:.01em;
+  animation:nameGlow 6s ease-in-out infinite;
+}
+@keyframes nameGlow{
+  0%,100%{filter:drop-shadow(0 0 0 rgba(216,57,75,0));}
+  50%    {filter:drop-shadow(0 6px 26px rgba(216,57,75,.28));}
 }
 .name-line{display:block;overflow:visible;padding:0 4px;}
 .name-line > i{
   display:inline-block;font-style:italic;
   opacity:0;transform:translateY(40%);
-  animation:slideUp 1.6s cubic-bezier(.16,1,.3,1) forwards;
+  /* living light sweeping through the names */
+  background:linear-gradient(100deg,
+    var(--ink) 0%,var(--ink) 38%,#ffffff 50%,var(--ink) 62%,var(--ink) 100%);
+  background-size:230% 100%;background-position:120% 0;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
 }
-.name-1 > i{animation-delay:1.4s;}
-.name-2 > i{animation-delay:1.8s;}
+.name-1 > i{animation:slideUp 1.6s 1.4s cubic-bezier(.16,1,.3,1) forwards,
+                     nameSheen 7.5s 4s ease-in-out infinite;}
+.name-2 > i{animation:slideUp 1.6s 1.8s cubic-bezier(.16,1,.3,1) forwards,
+                     nameSheen 7.5s 4.6s ease-in-out infinite;}
 @keyframes slideUp{to{opacity:1;transform:translateY(0);}}
+@keyframes nameSheen{
+  0%,100%{background-position:120% 0;}
+  45%,55%{background-position:-30% 0;}
+}
 
 .amp{
   display:block;
@@ -288,7 +329,15 @@ body{
 .hero-meta b{font-weight:500;color:var(--ink-dim);}
 
 /* ── heart divider · framed card · closing tagline ── */
-.orn-heart{width:15px;height:15px;flex:none;display:block;fill:var(--claret);}
+.orn-heart{width:15px;height:15px;flex:none;display:block;fill:var(--claret);
+  transform-origin:center;animation:heartBeat 2.6s ease-in-out infinite;}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1);fill:var(--oxblood);}
+  15%    {transform:scale(1.28);fill:var(--claret);}
+  30%    {transform:scale(1.02);}
+  45%    {transform:scale(1.2);fill:var(--rose-soft);}
+  60%    {transform:scale(1);fill:var(--claret);}
+}
 .foot-tagline{color:var(--gold-dim);margin-bottom:20px;}
 .gate-nochild{
   color:var(--claret);margin-top:-14px;margin-bottom:34px;
@@ -776,15 +825,17 @@ footer > *:not(.foot-bouquet){position:relative;z-index:2;}
 
 /* ═══════ REVEAL ═══════ */
 .reveal{
-  opacity:0;transform:translateY(26px);
+  opacity:0;transform:translateY(34px) scale(.985);filter:blur(9px);
   transition:opacity 1.5s cubic-bezier(.16,1,.3,1),
-             transform 1.5s cubic-bezier(.16,1,.3,1);
+             transform 1.5s cubic-bezier(.16,1,.3,1),
+             filter 1.4s cubic-bezier(.16,1,.3,1);
 }
-.reveal.in{opacity:1;transform:none;}
+.reveal.in{opacity:1;transform:none;filter:blur(0);}
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;}
-  .reveal{opacity:1;transform:none;}
+  .reveal{opacity:1;transform:none;filter:none;}
+  .name-line > i{background-position:0 0;}
   .name-line > i,.mono,.amp,.hero-meta,.scroll-cue,.inf,.hero-rose{opacity:1;transform:none;}
   .hairline{transform:scaleY(1);}
   .inf path{stroke-dashoffset:0;}
@@ -912,6 +963,11 @@ body.gated{overflow:hidden;}
 .rsvp-btn.solid{background:var(--oxblood);color:#fff;border-color:var(--oxblood);width:100%;}
 .rsvp-btn.solid:hover{background:var(--claret);border-color:var(--claret);color:#fff;}
 .rsvp-btn.solid:hover::before{transform:scaleX(0);}
+/* "Actually, I can make it" — deliberately bigger & bolder red */
+.rsvp-btn.solid.flip{margin-top:30px;background:var(--claret);border-color:var(--claret);
+  padding:20px 26px;box-shadow:0 18px 44px -22px var(--claret);}
+.rsvp-btn.solid.flip span{font-size:14px;letter-spacing:.14em;font-weight:600;padding-left:0;}
+.rsvp-btn.solid.flip:hover{background:var(--rose);border-color:var(--rose);}
 
 /* result screens */
 .result-wrap{display:none;text-align:center;width:100%;max-width:440px;margin-top:8px;}
@@ -1027,6 +1083,9 @@ body.gated{overflow:hidden;}
 <!-- ═══════════ HERO ═══════════ -->
 <div class="aura aura-1"></div>
 <div class="aura aura-2"></div>
+<div class="morph morph-1"></div>
+<div class="morph morph-2"></div>
+<div class="morph morph-3"></div>
 <div class="grain"></div>
 <div class="vignette"></div>
 
@@ -1041,7 +1100,16 @@ body.gated{overflow:hidden;}
   
 
   <svg class="hero-inf" viewBox="0 0 120 64" fill="none" aria-hidden="true">
-    <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
+    <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z">
+      <animate attributeName="d" dur="9s" repeatCount="indefinite"
+        calcMode="spline"
+        keyTimes="0;0.33;0.66;1"
+        keySplines="0.45 0 0.15 1;0.45 0 0.15 1;0.45 0 0.15 1"
+        values="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z;
+                M60 32c-11-15-19-22-29-22-13 0-22 9-22 22s9 22 22 22c10 0 18-7 29-22 11-15 19-22 29-22 13 0 22 9 22 22s-9 22-22 22c-10 0-18-7-29-22z;
+                M60 32c-7-11-15-16-25-16-11 0-20 7-20 16s9 16 20 16c10 0 18-5 25-16 7-11 15-16 25-16 11 0 20 7 20 16s-9 16-20 16c-10 0-18-5-25-16z;
+                M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
+    </path>
   </svg>
 
   <div class="eyebrow-invite caps caps-sm">Together with their families</div>
@@ -1217,7 +1285,7 @@ body.gated{overflow:hidden;}
     <span class="deco mark-rose" aria-hidden="true"></span>
     <div class="suc-name" id="decline-name">Thank you</div>
     <p class="suc-msg" style="margin-top:6px;">We're sorry you can't be with us — thank you for letting us know. You will be dearly missed.</p>
-    <button class="edit-link" id="change-decline" type="button" style="margin-top:30px;">Actually, I can make it</button>
+    <button class="rsvp-btn solid flip" id="change-decline" type="button"><span>Actually, I can make it</span></button>
   </div>
 </div>
 
@@ -1236,6 +1304,13 @@ const CONFIG = {
   // Your Cloudflare Worker URL. Leave '' and the site still works —
   // it just won't send the confirmation email.
   api: '',
+
+  // ── COMING / NOT-COMING LIST (Google Sheet) ──
+  // Paste the Google Apps Script Web-App URL here (see SETUP.md).
+  // Every Confirm / Decline / "Actually I can make it" updates one row
+  // per guest in your sheet, moving the name between Coming and Declined.
+  // Leave '' and the site still works — it just won't record to the sheet.
+  sheetApi: '',
 
   // Where the guest's "I'm coming" WhatsApp is addressed.
   // International format, digits only, no + and no spaces.
@@ -1590,9 +1665,19 @@ function showForm(){
 
 /* best-effort record to a backend if one is configured — never blocks the guest */
 function recordRsvp(name,phone,status){
-  if(!CONFIG.api) return;
-  try{ fetch(CONFIG.api,{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({name,phone,status})}).catch(()=>{}); }catch(_){}
+  const payload=JSON.stringify({name,phone,status,at:new Date().toISOString()});
+  // Cloudflare Worker (optional email)
+  if(CONFIG.api){
+    try{ fetch(CONFIG.api,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:payload}).catch(()=>{}); }catch(_){}
+  }
+  // Google Sheet (coming / not-coming list). text/plain + no-cors avoids the
+  // preflight that Apps Script can't answer; we don't need to read the reply.
+  if(CONFIG.sheetApi){
+    try{ fetch(CONFIG.sheetApi,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:payload}).catch(()=>{}); }catch(_){}
+  }
 }
 
 /* ══════ CONFIRM — attending ══════ */
@@ -1627,11 +1712,26 @@ if(declineBtn){
   });
 }
 
-/* ══════ CHANGE / UPDATE RESPONSE ══════ */
-['change-rsvp','change-decline'].forEach(id=>{
-  const b=document.getElementById(id);
-  if(b) b.addEventListener('click',showForm);
-});
+/* ══════ UPDATE MY RESPONSE (from the letter) — back to the form ══════ */
+const changeRsvpBtn=document.getElementById('change-rsvp');
+if(changeRsvpBtn) changeRsvpBtn.addEventListener('click',showForm);
+
+/* ══════ "ACTUALLY, I CAN MAKE IT" — flip a decline straight to coming ══════
+   Moves the guest from the Declined list to the Coming list, in one tap. */
+const flipBtn=document.getElementById('change-decline');
+if(flipBtn){
+  flipBtn.addEventListener('click',()=>{
+    const name=currentName||document.getElementById('inp-name').value.trim();
+    const phone=document.getElementById('inp-phone').value.trim();
+    if(!name){ showForm(); return; }   // no name in memory — just reopen the form
+    currentName=name;
+    saveRsvp(name,phone,'attending');
+    recordRsvp(name,phone,'attending');   // sheet upsert flips Declined → Coming
+    const g=document.getElementById('letter-guest');
+    if(g) g.textContent=name;
+    fadeSwap(declineDiv, letterDiv);
+  });
+}
 
 /* ══════ DOWNLOAD DIGITAL INVITATION (canvas → PNG) ══════ */
 const dlBtn=document.getElementById('download-btn');
