@@ -14,6 +14,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+[hidden]{display:none!important;}
 
 :root{
   /* ground — the warm near-black from the original invitation */
@@ -35,9 +36,9 @@
   --rose-soft:#D8394B;
 
   /* champagne */
-  --gold:#C5A572;
-  --gold-dim:#C5A572;
-  --gold-hair:rgba(197,165,114,.32);
+  --gold:#DAD2D2;
+  --gold-dim:#C6BDBD;
+  --gold-hair:rgba(242,237,228,.15);
 }
 
 /* Scroll fix — `overflow-x:hidden` on <html> makes iOS Safari refuse to
@@ -47,8 +48,8 @@ html{scroll-behavior:smooth;}
 body{
   background:var(--paper);
   background-image:
-    radial-gradient(ellipse 130% 70% at 50% -8%, rgba(140,21,38,.20) 0%, transparent 62%),
-    radial-gradient(ellipse 110% 60% at 50% 104%, rgba(197,165,114,.10) 0%, transparent 62%);
+    radial-gradient(ellipse 130% 70% at 50% -8%, rgba(140,21,38,.12) 0%, transparent 62%),
+    radial-gradient(ellipse 110% 60% at 50% 104%, rgba(242,237,228,.10) 0%, transparent 62%);
   background-attachment:fixed;
   color:var(--ink);
   font-family:'Cormorant Garamond',serif;
@@ -75,12 +76,12 @@ body{
 .aura{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
 .aura-1{
   top:-200px;left:-180px;width:560px;height:560px;
-  background:radial-gradient(circle,rgba(140,21,38,.34) 0%,transparent 62%);
+  background:radial-gradient(circle,rgba(140,21,38,.18) 0%,transparent 62%);
   animation:swell 20s ease-in-out infinite;
 }
 .aura-2{
   bottom:-180px;right:-180px;width:520px;height:520px;
-  background:radial-gradient(circle,rgba(197,165,114,.14) 0%,transparent 62%);
+  background:radial-gradient(circle,rgba(242,237,228,.14) 0%,transparent 62%);
   animation:swell 26s ease-in-out infinite reverse;
 }
 @keyframes swell{
@@ -382,7 +383,7 @@ body{
   margin-top:14px;padding:56px 24px 66px;
   overflow:hidden;
   background:
-    radial-gradient(ellipse at 50% 42%,rgba(140,21,38,.20) 0%,transparent 66%),
+    radial-gradient(ellipse at 50% 42%,rgba(140,21,38,.12) 0%,transparent 66%),
     #060405;
   box-shadow:inset 0 0 90px rgba(0,0,0,.9);
   border-top:1px solid var(--gold-hair);
@@ -797,8 +798,8 @@ footer > *:not(.foot-bouquet){position:relative;z-index:2;}
   display:flex;align-items:center;justify-content:center;
   padding:clamp(24px,6vw,48px);
   background:
-    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(140,21,38,.30) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(197,165,114,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(140,21,38,.16) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(242,237,228,.12) 0%, transparent 60%),
     #0A0708;
   transition:opacity .9s cubic-bezier(.16,1,.3,1);
 }
@@ -873,8 +874,93 @@ body.gated{overflow:hidden;}
   #gate{transition:none;}
 }
 
+/* ═══════ REDESIGN — hero, info, results, letter, music ═══════ */
+.hero-inf{width:92px;height:50px;display:block;margin:0 auto 30px;opacity:0;animation:rise 1.4s .3s ease forwards;}
+.hero-inf path{fill:none;stroke:var(--gold);stroke-width:1.15;stroke-linecap:round;
+  stroke-dasharray:250;stroke-dashoffset:250;animation:infTrace 3s .5s cubic-bezier(.45,0,.15,1) forwards;}
+.hero-invite-line{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(17px,4vw,23px);color:var(--ink-dim);margin-top:16px;
+  opacity:0;animation:rise 1.6s 2.1s ease forwards;
+}
+.hero-meta{margin-top:22px;}
+.hero-meta sup{font-size:.62em;}
+.scroll-cue{gap:9px;}
+.sc-arrow{width:20px;height:20px;color:var(--ink-faint);animation:bob 1.9s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.45;}50%{transform:translateY(6px);opacity:1;}}
+
+/* church + reception */
+.info-pair{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 44px;margin-top:28px;}
+.info-block{display:flex;flex-direction:column;gap:8px;min-width:190px;}
+.info-lbl{color:var(--rose);}
+.info-val{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(18px,4.2vw,23px);color:var(--ink-dim);}
+
+/* countdown notes */
+.cd-note{margin-top:22px;font-family:'Cormorant',serif;font-weight:500;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);}
+.cd-note sup{font-size:.7em;}
+.cd-closed{margin-top:30px;font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(21px,5vw,30px);color:var(--rose);}
+
+/* decline + solid buttons */
+.rsvp-btn.decline{margin-top:14px;border-color:var(--ink-whisper);color:var(--ink-faint);}
+.rsvp-btn.decline span{padding-left:0;letter-spacing:.16em;font-size:11px;}
+.rsvp-btn.decline:hover{border-color:var(--rose-soft);color:var(--ink);}
+.rsvp-btn.decline:hover::before{transform:scaleX(0);}
+.rsvp-btn.solid{background:var(--oxblood);color:#fff;border-color:var(--oxblood);width:100%;}
+.rsvp-btn.solid:hover{background:var(--claret);border-color:var(--claret);color:#fff;}
+.rsvp-btn.solid:hover::before{transform:scaleX(0);}
+
+/* result screens */
+.result-wrap{display:none;text-align:center;width:100%;max-width:440px;margin-top:8px;}
+
+/* digital invitation letter */
+.letter{
+  position:relative;border:1px solid var(--gold-hair);
+  background:linear-gradient(180deg,rgba(140,21,38,.10),transparent 58%),#0C0809;
+  padding:46px 30px 42px;box-shadow:0 30px 70px -40px rgba(0,0,0,.9);
+}
+.letter::after{content:'';position:absolute;inset:9px;border:1px solid rgba(242,237,228,.08);pointer-events:none;}
+.letter > *{position:relative;}
+.letter-inf{width:66px;height:36px;display:block;margin:0 auto 20px;}
+.letter-inf path{fill:none;stroke:var(--rose);stroke-width:1.4;stroke-linecap:round;}
+.letter-eyebrow{color:var(--rose);margin-bottom:22px;}
+.letter-names{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(26px,6.4vw,40px);line-height:1.14;color:var(--ink);margin:0;}
+.letter-amp{color:var(--rose);font-size:.66em;}
+.letter-sub{color:var(--ink-faint);margin-top:16px;}
+.letter-rule{width:60px;height:1px;background:var(--gold-hair);margin:26px auto;}
+.letter-line{font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(18px,4.4vw,21px);color:var(--ink-dim);line-height:1.5;margin:15px 0;}
+.letter-line .caps{display:block;color:var(--rose);margin-bottom:5px;}
+.letter-line sup{font-size:.62em;}
+.letter-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:16px;color:var(--ink-faint);margin-top:14px;line-height:1.6;}
+.letter-note.dress{margin-top:8px;}
+#download-btn{margin-top:22px;}
+#letter-state .edit-link{margin-top:22px;}
+
+/* footer — see you in skies */
+.foot-skies{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(30px,7.5vw,50px);color:var(--ink);}
+
+/* music toggle */
+.audio-toggle{position:fixed;right:16px;bottom:16px;z-index:120;
+  width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(12,8,9,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:1px solid var(--gold-hair);color:var(--ink-dim);cursor:pointer;
+  transition:color .4s,border-color .4s;}
+.audio-toggle:hover{color:var(--ink);border-color:var(--rose-soft);}
+.audio-toggle svg{width:20px;height:20px;}
+.audio-toggle .ico-off{display:none;}
+.audio-toggle.muted .ico-on{display:none;}
+.audio-toggle.muted .ico-off{display:block;}
+
 @media(max-width:440px){
   .section{padding:82px 26px;}
+  .info-block{min-width:auto;}
+  .letter{padding:38px 22px 34px;}
   .d-number{font-size:clamp(92px,26vw,150px);}
   .sw{width:54px;height:70px;}
   .d-chip{padding:0 14px;letter-spacing:.14em;font-size:12px;}
@@ -896,7 +982,8 @@ body.gated{overflow:hidden;}
     </svg>
     <div class="gate-eyebrow caps caps-sm">Creven &amp; Thuto · By Invitation</div>
     <h1 class="gate-title" id="gate-title">A private affair</h1>
-    <p class="gate-copy">This invitation is reserved for our named guests. Please enter your full name as it appears on your invitation.</p>
+    <p class="gate-copy">This invitation is reserved for our named guests. Please enter your full names.</p>
+    <p class="gate-nochild caps caps-sm">Strictly by invitation</p>
     <p class="gate-nochild caps caps-sm">Strictly no children</p>
 
     <form id="gate-form" autocomplete="off" novalidate>
@@ -925,6 +1012,13 @@ body.gated{overflow:hidden;}
 
 <div id="petals"></div>
 
+<!-- wedding song — place song.mp3 in the same folder as this file -->
+<audio id="song" src="song.mp3" loop preload="auto"></audio>
+<button id="audio-toggle" class="audio-toggle" type="button" aria-label="Pause music" hidden>
+  <svg class="ico-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  <svg class="ico-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9.5l4 5M21 9.5l-4 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+</button>
+
 <!-- ═══════════ HERO ═══════════ -->
 <div class="aura aura-1"></div>
 <div class="aura aura-2"></div>
@@ -941,12 +1035,9 @@ body.gated{overflow:hidden;}
   <!-- rose spray, bottom-right -->
   
 
-  <div class="monogram" aria-label="C and T">
-    <span class="mg-l">C</span>
-    <span class="mg-bar"></span>
-    <span class="mg-l">T</span>
-  </div>
-  <svg class="mg-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
+  <svg class="hero-inf" viewBox="0 0 120 64" fill="none" aria-hidden="true">
+    <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
+  </svg>
 
   <div class="eyebrow-invite caps caps-sm">Together with their families</div>
 
@@ -956,26 +1047,23 @@ body.gated{overflow:hidden;}
     <span class="name-line name-2"><i>Thuto Obuseng</i></span>
   </div>
 
-  <div class="hero-meta caps caps-sm">
-    <b>Saturday</b> &nbsp;·&nbsp; 31 October 2026 &nbsp;·&nbsp; <b>Bulawayo</b>
-  </div>
-  <div class="hero-invite caps caps-sm">Strictly by invitation</div>
+  <p class="hero-invite-line">invite you to their wedding celebration</p>
 
-  <div class="scroll-cue caps" style="font-size:11px;">
-    <div class="sc-line"></div>
-    Enter
+  <div class="hero-meta caps caps-sm">
+    Saturday &nbsp;·&nbsp; 31<sup>st</sup> October 2026 &nbsp;·&nbsp; Bulawayo
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span class="caps" style="font-size:10px;">Scroll to discover</span>
+    <svg class="sc-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </section>
 
 <!-- ═══════════ INVITATION ═══════════ -->
 <div class="section reveal">
   <span class="deco mark-rose" aria-hidden="true"></span>
-  <div class="eyebrow caps caps-sm">Together with their families</div>
-  <div class="display it">Wedding Celebration</div>
-  <p class="body-copy">
-    You are invited to witness and celebrate<br>
-    as two lives become one
-  </p>
+  <div class="display it">You are invited to witness<br>and celebrate</div>
+  <p class="body-copy">as two lives become one</p>
 </div>
 
 <div class="ornament reveal">
@@ -1009,7 +1097,16 @@ body.gated{overflow:hidden;}
     </div>
   </div>
   <div class="venue-line">Bulawayo, Zimbabwe</div>
-  <div class="venue-lock">Venue announced on the day of the wedding</div>
+  <div class="info-pair">
+    <div class="info-block">
+      <span class="info-lbl caps caps-sm">The Church</span>
+      <span class="info-val">Anglican Church, Hillside</span>
+    </div>
+    <div class="info-block">
+      <span class="info-lbl caps caps-sm">Reception Venue</span>
+      <span class="info-val">Revealed after you RSVP</span>
+    </div>
+  </div>
 </div>
 
 <div class="ornament reveal">
@@ -1020,13 +1117,15 @@ body.gated{overflow:hidden;}
 
 <!-- ═══════════ COUNTDOWN ═══════════ -->
 <div class="section reveal">
-  <div class="eyebrow caps caps-sm">Until we say I do</div>
-  <div class="cd-grid">
+  <div class="eyebrow caps caps-sm">RSVP closes in</div>
+  <div class="cd-grid" id="cd-grid">
     <div class="cd-unit"><span class="cd-num" id="d">—</span><span class="cd-lbl">Days</span></div>
     <div class="cd-unit"><span class="cd-num" id="h">—</span><span class="cd-lbl">Hours</span></div>
     <div class="cd-unit"><span class="cd-num" id="m">—</span><span class="cd-lbl">Minutes</span></div>
     <div class="cd-unit"><span class="cd-num" id="s">—</span><span class="cd-lbl">Seconds</span></div>
   </div>
+  <p class="cd-note" id="cd-note">Kindly respond by 7<sup>th</sup> October 2026</p>
+  <p class="cd-closed" id="cd-closed" hidden>RSVP has now closed</p>
 </div>
 
 <div class="ornament reveal">
@@ -1061,10 +1160,9 @@ body.gated{overflow:hidden;}
 <div class="section reveal">
   <div class="eyebrow caps caps-sm">RSVP</div>
   <div class="display">Kindly Respond</div>
-  <p class="body-copy" style="margin-top:16px;">Kindly confirm below. Venue details will be<br>announced on the day of the wedding</p>
+  <p class="body-copy" style="margin-top:16px;">Reception details will be revealed<br>on the wedding date.</p>
 
   <div id="form-state" class="rsvp-wrap">
-    <div class="editing-flag" id="editing-flag">Updating your RSVP</div>
     <div class="rsvp-error" id="rsvp-error" role="alert"></div>
 
     <form id="rsvp-form" name="wedding-rsvp" novalidate>
@@ -1081,48 +1179,38 @@ body.gated{overflow:hidden;}
         <label class="rsvp-label" for="inp-phone">Telephone</label>
         <input class="rsvp-input" type="tel" name="phone" id="inp-phone" placeholder="+267 or +263 …" autocomplete="tel" required>
       </div>
-      <div class="rsvp-field">
-        <label class="rsvp-label" for="inp-email">Email</label>
-        <input class="rsvp-input" type="email" name="email" id="inp-email" placeholder="So we can send your confirmation" autocomplete="email" required>
-      </div>
-      <div class="rsvp-lock">Venue announced on the day of the wedding</div>
-      <button type="submit" class="rsvp-btn" id="rsvp-btn"><span>Confirm</span></button>
+      <button type="submit" class="rsvp-btn" id="rsvp-btn"><span>Confirm attendance</span></button>
+      <button type="button" class="rsvp-btn decline" id="decline-btn"><span>I would love to come, but I won't make it</span></button>
     </form>
   </div>
 
-  <!-- SUCCESS -->
-  <div id="success-state" class="success-wrap">
+  <!-- DIGITAL INVITATION LETTER (attending) -->
+  <div id="letter-state" class="result-wrap">
+    <div class="letter" id="letter">
+      <svg class="letter-inf" viewBox="0 0 120 64" fill="none" aria-hidden="true">
+        <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
+      </svg>
+      <p class="letter-eyebrow caps caps-sm">You're confirmed · <span id="letter-guest">Guest</span></p>
+      <h3 class="letter-names">Creven Matonisa<br><span class="letter-amp">&amp;</span><br>Thuto Obuseng</h3>
+      <p class="letter-sub caps caps-sm">Wedding Celebration</p>
+      <div class="letter-rule"></div>
+      <p class="letter-line"><span class="caps caps-sm">When</span><br>Saturday, 31<sup>st</sup> October 2026</p>
+      <p class="letter-line"><span class="caps caps-sm">Where</span><br>Bulawayo, Zimbabwe</p>
+      <p class="letter-line"><span class="caps caps-sm">The Church</span><br>Anglican Church, Hillside</p>
+      <div class="letter-rule"></div>
+      <p class="letter-note">Reception details will be revealed on the wedding date.</p>
+      <p class="letter-note dress">Dress code — black &amp; white, with touches of red.</p>
+    </div>
+    <button class="rsvp-btn solid" id="download-btn"><span>Download invitation</span></button>
+    <button class="edit-link" id="change-rsvp" type="button">Update my response</button>
+  </div>
+
+  <!-- DECLINE -->
+  <div id="decline-state" class="result-wrap">
     <span class="deco mark-rose" aria-hidden="true"></span>
-    <div class="suc-name" id="suc-name">Name</div>
-    <div class="suc-sub">Your response has been received</div>
-
-    <div class="venue-reveal-box">
-      <div class="vr-label">What we can tell you so far</div>
-      <div class="vr-venue" id="vr-text">Saturday 31 October 2026<br>10:30am till late<br>Bulawayo, Zimbabwe</div>
-      <p class="vr-note">Venue details will be announced on the day of the wedding</p>
-    </div>
-
-    <a class="wa-btn" id="wa-btn" href="#" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.09-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.21.89 2.39 1.01 2.55.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
-      <span id="wa-btn-label">Send your confirmation to Thuto &amp; Creven</span>
-    </a>
-    <p class="wa-note" id="wa-note">Opens WhatsApp with the message already written — just press send.</p>
-
-    <p class="suc-msg">We look forward to celebrating with you</p>
-
-    <div class="suc-links">
-      <button class="edit-link" id="change-rsvp" type="button">Amend my response</button>
-      <button class="edit-link" id="withdraw-rsvp" type="button">Withdraw my response</button>
-    </div>
-
-    <div class="suc-contacts">
-      <a href="tel:+26776668180" class="suc-contact">
-        <span class="sc-who">Obuseng</span><span class="sc-num">+267 766 68180</span>
-      </a>
-      <a href="tel:+263772873466" class="suc-contact">
-        <span class="sc-who">Matonisa</span><span class="sc-num">+263 77 287 3466</span>
-      </a>
-    </div>
+    <div class="suc-name" id="decline-name">Thank you</div>
+    <p class="suc-msg" style="margin-top:6px;">We're sorry you can't be with us — thank you for letting us know. You will be dearly missed.</p>
+    <button class="edit-link" id="change-decline" type="button" style="margin-top:30px;">Actually, I can make it</button>
   </div>
 </div>
 
@@ -1130,16 +1218,7 @@ body.gated{overflow:hidden;}
 <footer class="reveal">
   <span class="deco foot-bouquet" aria-hidden="true"></span>
 
-  <div class="foot-names">Creven &amp; Thuto</div>
-  <p class="foot-detail caps caps-sm">31 · October · 2026</p>
-  <p class="foot-detail caps caps-sm" style="margin-top:10px;">Bulawayo, Zimbabwe</p>
-  <div class="ornament" style="margin-top:36px;">
-    <span class="orn-line"></span>
-    <svg class="orn-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.4-4.7-10-9.1C.5 9 1.7 5.4 5 5.4c2.1 0 3.4 1.2 4 2.4C9.6 6.6 10.9 5.4 13 5.4c3.3 0 4.5 3.6 3 6.5C19.4 16.3 12 21 12 21z"/></svg>
-    <span class="orn-line"></span>
-  </div>
-  <p class="foot-tagline caps caps-sm">A new chapter · The same love</p>
-  <p class="foot-quote">"I have found the one whom my soul loves" &nbsp;·&nbsp; Solomon 3:4</p>
+  <p class="foot-skies">See you in skies.</p>
 </footer>
 
 <script>
@@ -1167,6 +1246,26 @@ const CONFIG = {
   // one name per line, no need to touch this HTML.
   guestListUrl: 'guests.csv'
 };
+
+/* ══════ MUSIC ══════ */
+const audioEl=document.getElementById('song');
+const audioToggle=document.getElementById('audio-toggle');
+let musicStarted=false;
+function startMusic(){
+  if(musicStarted||!audioEl) return;
+  audioEl.volume=0;
+  const fade=()=>{let v=0;const id=setInterval(()=>{v=Math.min(0.82,v+0.04);audioEl.volume=v;if(v>=0.82)clearInterval(id);},120);};
+  const done=()=>{musicStarted=true;if(audioToggle)audioToggle.hidden=false;fade();};
+  const pr=audioEl.play();
+  if(pr&&pr.then){ pr.then(done).catch(()=>{}); } else { done(); }
+}
+if(audioToggle){
+  audioToggle.addEventListener('click',()=>{
+    if(audioEl.paused){ audioEl.play(); audioToggle.classList.remove('muted'); audioToggle.setAttribute('aria-label','Pause music'); }
+    else { audioEl.pause(); audioToggle.classList.add('muted'); audioToggle.setAttribute('aria-label','Play music'); }
+  });
+}
+
 
 /* ══════════════════════════════════════════════════════════
    INVITATION GATE — name check against the guest list
@@ -1303,7 +1402,12 @@ const CONFIG = {
     const rsvpName=document.getElementById('inp-name');
     if(rsvpName && !rsvpName.value) rsvpName.value=name;
     document.body.classList.remove('gated');
-    if(instant){ gate.remove(); return; }
+    if(instant){
+      gate.remove();
+      window.addEventListener('pointerdown',function o(){startMusic();window.removeEventListener('pointerdown',o);},{once:true});
+      return;
+    }
+    startMusic();
     gate.classList.add('unlocking');
     setTimeout(()=>gate.remove(), 950);
   }
@@ -1404,216 +1508,162 @@ function setUnit(id,val){
     prev[id]=str;
   }
 }
+const RSVP_DEADLINE=new Date('2026-10-07T23:59:59');
+let cdTimer=null;
 function tick(){
-  const diff=Math.max(0,new Date('2026-10-31T10:30:00')-new Date());
+  const diff=RSVP_DEADLINE-new Date();
+  if(diff<=0){
+    const grid=document.getElementById('cd-grid'), note=document.getElementById('cd-note'), closed=document.getElementById('cd-closed');
+    if(grid) grid.hidden=true; if(note) note.hidden=true; if(closed) closed.hidden=false;
+    const rb=document.getElementById('rsvp-btn'), db=document.getElementById('decline-btn');
+    if(rb) rb.disabled=true; if(db) db.disabled=true;
+    if(cdTimer) clearInterval(cdTimer);
+    return;
+  }
   setUnit('d',~~(diff/864e5));
   setUnit('h',~~(diff%864e5/36e5));
   setUnit('m',~~(diff%36e5/6e4));
   setUnit('s',~~(diff%6e4/1e3));
 }
-tick(); setInterval(tick,1000);
+tick(); cdTimer=setInterval(tick,1000);
 
 /* ══════ RSVP STORE ══════ */
 const KEY='ct_rsvps_oct2026';
 let editIndex=null;
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch{return[];}}
 function persist(l){try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
-function saveRsvp(name,phone,email){
+function saveRsvp(name,phone,status){
   const l=load();
-  const entry={name,phone:phone||'',email:email||'',t:Date.now()};
-  if(editIndex!==null&&l[editIndex]){
-    entry.t=l[editIndex].t; entry.edited=Date.now(); l[editIndex]=entry;
-  }else{
-    l.push(entry); editIndex=l.length-1;
-  }
+  const entry={name,phone:phone||'',status:status||'attending',t:Date.now()};
+  if(editIndex!==null&&l[editIndex]){ entry.t=l[editIndex].t; entry.edited=Date.now(); l[editIndex]=entry; }
+  else { l.push(entry); editIndex=l.length-1; }
   persist(l);
 }
 
 /* ══════ ELEMENTS ══════ */
-const form    = document.getElementById('rsvp-form');
-const btn     = document.getElementById('rsvp-btn');
-const formDiv = document.getElementById('form-state');
-const succDiv = document.getElementById('success-state');
-const flagEl  = document.getElementById('editing-flag');
+const form       = document.getElementById('rsvp-form');
+const btn        = document.getElementById('rsvp-btn');
+const declineBtn = document.getElementById('decline-btn');
+const formDiv    = document.getElementById('form-state');
+const letterDiv  = document.getElementById('letter-state');
+const declineDiv = document.getElementById('decline-state');
+const errEl      = document.getElementById('rsvp-error');
+let currentName='';
 
+function showError(msg){ if(!errEl)return; errEl.textContent=msg; errEl.classList.add('show'); }
+function clearError(){ if(errEl) errEl.classList.remove('show'); }
+
+function fadeSwap(hideEl,showEl){
+  hideEl.style.cssText='opacity:0;transform:translateY(-12px);transition:all .7s cubic-bezier(.16,1,.3,1);pointer-events:none;';
+  setTimeout(()=>{
+    hideEl.style.display='none';
+    showEl.style.cssText='display:block;opacity:0;transform:translateY(20px);transition:all 1s cubic-bezier(.16,1,.3,1);';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ showEl.style.opacity='1'; showEl.style.transform='none'; }));
+    setTimeout(()=>showEl.scrollIntoView({behavior:'smooth',block:'center'}),120);
+  },700);
+}
 function showForm(){
-  succDiv.style.display='none';
-  formDiv.style.display='';
+  [letterDiv,declineDiv].forEach(d=>{ if(d) d.style.display='none'; });
   formDiv.style.cssText='opacity:0;transform:translateY(16px);transition:all .8s cubic-bezier(.16,1,.3,1);';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    formDiv.style.opacity='1'; formDiv.style.transform='none';
-  }));
+  formDiv.style.display='';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ formDiv.style.opacity='1'; formDiv.style.transform='none'; }));
   formDiv.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-/* ══════ EDIT ══════ */
-function openEditor(idx){
-  const g=load()[idx]; if(!g) return;
-  editIndex=idx;
-  document.getElementById('inp-name').value  =g.name  ||'';
-  document.getElementById('inp-phone').value =g.phone ||'';
-  document.getElementById('inp-email').value =g.email ||'';
-  if(flagEl) flagEl.classList.add('show');
-  btn.disabled=false;
-  btn.querySelector('span').textContent='Update';
-  showForm();
+/* best-effort record to a backend if one is configured — never blocks the guest */
+function recordRsvp(name,phone,status){
+  if(!CONFIG.api) return;
+  try{ fetch(CONFIG.api,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name,phone,status})}).catch(()=>{}); }catch(_){}
 }
-document.addEventListener('click',e=>{
-  const b=e.target.closest('.gr-edit'); if(!b) return;
-  openEditor(parseInt(b.dataset.edit,10));
+
+/* ══════ CONFIRM — attending ══════ */
+form.addEventListener('submit',e=>{
+  e.preventDefault(); clearError();
+  const bot=document.getElementById('b-field'); if(bot&&bot.value) return;
+  const name=document.getElementById('inp-name').value.trim();
+  const phone=document.getElementById('inp-phone').value.trim();
+  if(!name){showError('Please enter your name');document.getElementById('inp-name').focus();return;}
+  if(!phone){showError('Please add a phone number so we can reach you');document.getElementById('inp-phone').focus();return;}
+  currentName=name;
+  saveRsvp(name,phone,'attending');
+  recordRsvp(name,phone,'attending');
+  const g=document.getElementById('letter-guest');
+  if(g) g.textContent=name.split(/\s+/)[0];
+  fadeSwap(formDiv, letterDiv);
 });
 
-/* ══════ DELETE (tap twice) ══════ */
-let pendingDelete=null;
-function resetDeletes(){
-  document.querySelectorAll('.gr-del').forEach(b=>{b.textContent='Remove';b.classList.remove('confirm');});
-  pendingDelete=null;
-}
-function deleteRsvp(idx){
-  const l=load(); if(!l[idx]) return;
-  l.splice(idx,1); persist(l);
-  if(editIndex!==null){
-    if(editIndex===idx) editIndex=null;
-    else if(editIndex>idx) editIndex-=1;
-  }
-}
-document.addEventListener('click',e=>{
-  const b=e.target.closest('.gr-del');
-  if(!b){ if(pendingDelete!==null) resetDeletes(); return; }
-  const idx=parseInt(b.dataset.del,10);
-  if(pendingDelete!==idx){
-    resetDeletes(); pendingDelete=idx;
-    b.textContent='Confirm'; b.classList.add('confirm');
-    setTimeout(()=>{if(pendingDelete===idx) resetDeletes();},4000);
-    return;
-  }
-  const row=b.closest('.guest-row'); pendingDelete=null;
-  if(row){row.classList.add('removing');setTimeout(()=>deleteRsvp(idx),480);}
-  else deleteRsvp(idx);
-});
-
-/* ══════ AMEND / WITHDRAW ══════ */
-const changeBtn=document.getElementById('change-rsvp');
-if(changeBtn){
-  changeBtn.addEventListener('click',()=>{
-    let idx=editIndex;
-    if(idx===null){const l=load(); if(!l.length) return; idx=l.length-1;}
-    openEditor(idx);
-  });
-}
-const withdrawBtn=document.getElementById('withdraw-rsvp');
-if(withdrawBtn){
-  let armed=false;
-  withdrawBtn.addEventListener('click',()=>{
-    if(!armed){
-      armed=true; withdrawBtn.textContent='Tap again to confirm';
-      setTimeout(()=>{armed=false;withdrawBtn.textContent='Withdraw my response';},4000);
-      return;
-    }
-    let idx=editIndex;
-    if(idx===null){const l=load(); if(!l.length) return; idx=l.length-1;}
-    deleteRsvp(idx); editIndex=null;
-    ['inp-name','inp-phone','inp-email'].forEach(i=>document.getElementById(i).value='');
-    if(flagEl) flagEl.classList.remove('show');
-    btn.disabled=false; btn.querySelector('span').textContent='Confirm';
-    armed=false; withdrawBtn.textContent='Withdraw my response';
-    showForm();
+/* ══════ DECLINE ══════ */
+if(declineBtn){
+  declineBtn.addEventListener('click',()=>{
+    clearError();
+    const name=document.getElementById('inp-name').value.trim();
+    const phone=document.getElementById('inp-phone').value.trim();
+    if(!name){showError('Please enter your name first');document.getElementById('inp-name').focus();return;}
+    currentName=name;
+    saveRsvp(name,phone,'declined');
+    recordRsvp(name,phone,'declined');
+    const dn=document.getElementById('decline-name');
+    if(dn) dn.textContent='Thank you, '+name.split(/\s+/)[0];
+    fadeSwap(formDiv, declineDiv);
   });
 }
 
-/* ══════ THE MESSAGE THE GUEST SENDS YOU ══════ */
-function coupleMessage(name){
-  return 'Hello Thuto and Creven — it\'s '+name+'. '
-       + 'I\'ve just confirmed on your wedding website that I will be there on '
-       + CONFIG.date+'. Thank you for inviting me. Congratulations to you both.';
-}
-function waLink(name){
-  return 'https://wa.me/'+CONFIG.coupleWhatsApp
-       + '?text='+encodeURIComponent(coupleMessage(name));
-}
-
-/* ══════ SUBMIT ══════ */
-const errEl = document.getElementById('rsvp-error');
-function showError(msg){
-  if(!errEl) return;
-  errEl.textContent=msg;
-  errEl.classList.add('show');
-}
-function clearError(){ if(errEl) errEl.classList.remove('show'); }
-
-form.addEventListener('submit',async e=>{
-  e.preventDefault();
-  clearError();
-
-  // honeypot — a real guest never fills this
-  const bot=document.getElementById('b-field');
-  if(bot&&bot.value) return;
-
-  const name  =document.getElementById('inp-name').value.trim();
-  const phone =document.getElementById('inp-phone').value.trim();
-  const email =document.getElementById('inp-email').value.trim();
-
-  if(!name){showError('Please tell us your name');document.getElementById('inp-name').focus();return;}
-  if(!phone){showError('We need a phone number to reach you');document.getElementById('inp-phone').focus();return;}
-  if(!/^\S+@\S+\.\S+$/.test(email)){showError('That email doesn’t look right — your confirmation is sent there');document.getElementById('inp-email').focus();return;}
-
-  const wasEditing = editIndex!==null;
-  btn.disabled=true;
-  btn.querySelector('span').textContent = wasEditing?'Updating':'Confirming';
-
-  saveRsvp(name,phone,email);
-  if(flagEl) flagEl.classList.remove('show');
-
-  // Send to the Worker, which emails the guest their confirmation.
-  // If it fails the RSVP still stands — we never block the guest on it.
-  let emailed=false;
-  if(CONFIG.api){
-    try{
-      const r=await fetch(CONFIG.api,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name,phone,email,editing:wasEditing})
-      });
-      emailed=r.ok;
-    }catch(_){ emailed=false; }
-  }
-
-  // Prepare the WhatsApp hand-off
-  const waBtn=document.getElementById('wa-btn');
-  if(waBtn) waBtn.href=waLink(name);
-  const waNote=document.getElementById('wa-note');
-  if(waNote){
-    waNote.textContent = emailed
-      ? 'A copy has been emailed to you. Opens WhatsApp with the message already written — just press send.'
-      : 'Opens WhatsApp with the message already written — just press send.';
-  }
-
-  document.getElementById('suc-name').textContent=name;
-  const sub=document.querySelector('.suc-sub');
-  if(sub) sub.textContent = wasEditing?'Your response has been updated':'Your response has been received';
-  btn.disabled=false; btn.querySelector('span').textContent='Confirm';
-
-  formDiv.style.cssText='opacity:0;transform:translateY(-12px);transition:all .7s cubic-bezier(.16,1,.3,1);pointer-events:none;';
-  setTimeout(()=>{
-    formDiv.style.display='none';
-    succDiv.style.cssText='display:block;opacity:0;transform:translateY(20px);transition:all 1s cubic-bezier(.16,1,.3,1);';
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      succDiv.style.opacity='1'; succDiv.style.transform='none';
-    }));
-  },700);
+/* ══════ CHANGE / UPDATE RESPONSE ══════ */
+['change-rsvp','change-decline'].forEach(id=>{
+  const b=document.getElementById(id);
+  if(b) b.addEventListener('click',showForm);
 });
 
-// Mark the button once they've been handed off to WhatsApp
-const waBtnEl=document.getElementById('wa-btn');
-if(waBtnEl){
-  waBtnEl.addEventListener('click',()=>{
-    setTimeout(()=>{
-      waBtnEl.classList.add('sent');
-      const lbl=document.getElementById('wa-btn-label');
-      if(lbl) lbl.textContent='Send again on WhatsApp';
-    },1200);
+/* ══════ DOWNLOAD DIGITAL INVITATION (canvas → PNG) ══════ */
+const dlBtn=document.getElementById('download-btn');
+if(dlBtn){
+  dlBtn.addEventListener('click',()=>{
+    const name=currentName||(document.getElementById('inp-name').value.trim())||'Our Guest';
+    drawInvitation(name);
   });
 }
+function drawInvitation(name){
+  const W=1080,H=1528,c=document.createElement('canvas');
+  c.width=W;c.height=H;const x=c.getContext('2d');
+  x.fillStyle='#0A0708';x.fillRect(0,0,W,H);
+  const g=x.createRadialGradient(W/2,-120,60,W/2,-120,980);
+  g.addColorStop(0,'rgba(140,21,38,.30)');g.addColorStop(1,'rgba(10,7,8,0)');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(242,237,228,.32)';x.lineWidth=2;x.strokeRect(46,46,W-92,H-92);
+  x.strokeStyle='rgba(242,237,228,.16)';x.lineWidth=1;x.strokeRect(58,58,W-116,H-116);
+  const cx=W/2; x.textAlign='center';
+  const ivory='#F2EDE4', red='#D8394B', dim='rgba(242,237,228,.6)';
+  function T(t,y,font,color){ x.font=font; x.fillStyle=color; x.textAlign='center'; x.fillText(t,cx,y); }
+  function L(t,y,font,color,ls){ x.save();x.font=font;x.fillStyle=color;x.textAlign='left';
+    const w=t.split('').reduce((a,ch)=>a+x.measureText(ch).width+ls,-ls);
+    let sx=cx-w/2; for(const ch of t){ x.fillText(ch,sx,y); sx+=x.measureText(ch).width+ls; } x.restore(); }
+  L('YOU ARE INVITED',150,'500 22px Georgia',red,7);
+  T(name,230,'italic 300 44px Georgia',ivory);
+  x.strokeStyle=ivory;x.lineWidth=2;x.beginPath();
+  x.ellipse(cx-21,300,19,12,0,0,Math.PI*2);x.ellipse(cx+21,300,19,12,0,0,Math.PI*2);x.stroke();
+  T('Creven Matonisa',420,'italic 300 62px Georgia',ivory);
+  T('&',492,'italic 300 40px Georgia',red);
+  T('Thuto Obuseng',560,'italic 300 62px Georgia',ivory);
+  L('WEDDING CELEBRATION',628,'500 22px Georgia',dim,6);
+  x.strokeStyle='rgba(242,237,228,.18)';x.lineWidth=1;x.beginPath();x.moveTo(cx-150,690);x.lineTo(cx+150,690);x.stroke();
+  const rows=[['WHEN','Saturday, 31st October 2026'],['WHERE','Bulawayo, Zimbabwe'],['THE CHURCH','Anglican Church, Hillside']];
+  let ry=760;
+  rows.forEach(r=>{ L(r[0],ry,'500 19px Georgia',red,5); T(r[1],ry+46,'300 34px Georgia',ivory); ry+=118; });
+  x.strokeStyle='rgba(242,237,228,.18)';x.lineWidth=1;x.beginPath();x.moveTo(cx-150,ry-4);x.lineTo(cx+150,ry-4);x.stroke();
+  T('Reception details will be revealed',ry+56,'italic 300 30px Georgia',dim);
+  T('on the wedding date.',ry+98,'italic 300 30px Georgia',dim);
+  T('Dress code — black & white, with touches of red',ry+168,'300 23px Georgia',dim);
+  L('SEE YOU IN SKIES',H-118,'500 22px Georgia',red,6);
+  c.toBlob(function(b){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download='Creven-and-Thuto-Invitation-'+name.replace(/\s+/g,'-')+'.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  },'image/png');
+}
+
 
 /* ══════ REVEAL ══════ */
 const obs=new IntersectionObserver(
