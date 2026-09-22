@@ -1318,11 +1318,13 @@ const CONFIG = {
   time: '10:30am till late',
   city: 'Bulawayo, Zimbabwe',
 
-  // ── GUEST LIST GATE ──
-  // The list of invited names lives in guests.csv, next to this file
-  // in your GitHub repo. Edit that file to add or remove guests —
-  // one name per line, no need to touch this HTML.
-  guestListUrl: 'guests.csv',
+  // ── GUEST LIST GATE (private) ──
+  // The invited names live on the "Guests" tab of your Google Sheet — NOT
+  // in this public repo. When a visitor types their name, the site asks the
+  // Apps Script whether it's on the list. Uses the same Web-App URL.
+  // Leave '' to fall back to the old public guests.csv method.
+  gateApi: 'https://script.google.com/macros/s/AKfycbyf7bPuw6m9lm5hfMWr0KeEibYM3-uOwBFEsHuUwznLXONdA34tZF2j5-fqGrmbJxVWpQ/exec',
+  guestListUrl: '',   // legacy public CSV — only used if gateApi is empty
 
   // ── DOWNLOADABLE INVITATION CARD ──
   // Put your designed card (from the OpenAI prompt) in the repo and name it
@@ -1384,70 +1386,30 @@ if(audioToggle){
 
   document.body.classList.add('gated');
 
-  /* ── name normalising + fuzzy matching ── */
-  function norm(s){
-    return String(s).toLowerCase()
-      .normalize('NFD').replace(/[̀-ͯ]/g,'')  // strip accents
-      .replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();
+  /* ── server-side guest check — the list stays private on the Sheet ── */
+  let checking=false;
+  function setChecking(on){
+    checking=on;
+    btn.disabled=on;
+    btn.querySelector('span').textContent = on ? 'Checking…' : 'Find my invitation';
   }
-  function lev(a,b){
-    const m=a.length,n=b.length;
-    if(!m) return n; if(!n) return m;
-    let prev=Array.from({length:n+1},(_,i)=>i), cur=new Array(n+1);
-    for(let i=1;i<=m;i++){
-      cur[0]=i;
-      for(let j=1;j<=n;j++){
-        const cost=a[i-1]===b[j-1]?0:1;
-        cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
-      }
-      [prev,cur]=[cur,prev];
-    }
-    return prev[n];
-  }
-  function tokenSim(a,b){
-    if(a===b) return 1;
-    if(a.length>=3 && b.length>=3 && (a.startsWith(b)||b.startsWith(a))) return .92;
-    return 1 - lev(a,b)/Math.max(a.length,b.length);
-  }
-  function score(inp, g){
-    if(inp===g) return 1;
-    const it=inp.split(' ').filter(Boolean), gt=g.split(' ').filter(Boolean);
-    if(!it.length || !gt.length) return 0;
-    // same tokens in any order → treat as an exact match
-    if(it.length===gt.length && [...it].sort().join(' ')===[...gt].sort().join(' ')) return 1;
-    // both the entered name and the listed name must be well covered,
-    // so a lone surname can't unlock someone else's invitation
-    const cover = (from,to)=> from.reduce((s,t)=>
-      s + to.reduce((b,u)=>Math.max(b,tokenSim(t,u)),0), 0) / from.length;
-    return Math.min(cover(it,gt), cover(gt,it));
-  }
+  setChecking(false);   // ready immediately — no public list to download
 
-  /* ── load the guest list ── */
-  let GUESTS = [];   // [{raw, n}]
-  function parseCsv(text){
-    return text.split(/\r?\n/).map(l=>l.trim())
-      .filter(l=>l && !l.startsWith('#'))
-      .map(l=>l.split(',')[0].trim().replace(/^["']|["']$/g,''))
-      .filter(name=>name && norm(name)!=='guest name' && norm(name)!=='name');
+  // JSONP: reads the Apps Script reply from a <script> tag (no CORS needed)
+  let jsonpN=0;
+  function jsonp(base, params, ok, fail){
+    const cb='ctcb_'+(++jsonpN)+'_'+Date.now();
+    const q=Object.keys(params).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(params[k])).join('&');
+    const s=document.createElement('script');
+    let done=false;
+    const finish=(fn,arg)=>{ if(done)return; done=true; clearTimeout(to);
+      try{delete window[cb];}catch(_){window[cb]=undefined;} s.remove(); if(fn) fn(arg); };
+    const to=setTimeout(()=>finish(fail),12000);
+    window[cb]=data=>finish(ok,data);
+    s.onerror=()=>finish(fail);
+    s.src=base+(base.indexOf('?')>=0?'&':'?')+q+'&callback='+cb;
+    document.head.appendChild(s);
   }
-  function ready(list){
-    GUESTS = list.map(raw=>({raw, n:norm(raw)}));
-    btn.disabled=false;
-    btn.querySelector('span').textContent='Find my invitation';
-  }
-  btn.disabled=true;
-  btn.querySelector('span').textContent='Loading…';
-  fetch(CONFIG.guestListUrl, {cache:'no-store'})
-    .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
-    .then(t=>ready(parseCsv(t)))
-    .catch(()=>{
-      // if the list can't be reached, don't silently lock everyone out —
-      // say so and point them to a person.
-      showError('We could not load the guest list just now. Please refresh, '
-        + 'or message Thuto or Creven and we will let you in.');
-      btn.disabled=false;
-      btn.querySelector('span').textContent='Try again';
-    });
 
   /* ── UI helpers ── */
   function showError(msg){
@@ -1460,27 +1422,28 @@ if(audioToggle){
 
   function attempt(){
     clearMsgs();
-    const q=norm(input.value);
-    if(!q){ input.focus(); return; }
-    if(!GUESTS.length){
-      showError('The guest list is still loading — please try once more in a moment.');
+    const raw=input.value.trim();
+    if(!raw){ input.focus(); return; }
+    if(checking) return;
+    if(!CONFIG.gateApi){
+      showError('The guest list is not reachable right now. Please refresh, '
+        + 'or message Thuto or Creven and we will let you in.');
       return;
     }
-    let best=null, bestScore=0;
-    for(const g of GUESTS){
-      const s=score(q, g.n);
-      if(s>bestScore){ bestScore=s; best=g; }
-    }
-    if(best && bestScore>=0.999){
-      open(best.raw);                         // confident match — let them in
-    }else if(best && bestScore>=0.70){
-      pending=best.raw;                       // close — confirm first
-      suggNm.textContent=best.raw;
-      sugg.hidden=false;
-    }else{
-      showError('We could not find that name on the guest list. '
-        + 'Please check the spelling, or use your full name as it appears on your invitation.');
-    }
+    setChecking(true);
+    jsonp(CONFIG.gateApi, {action:'gate', name:raw},
+      res=>{
+        setChecking(false);
+        if(!res){ showError('We could not check the guest list just now. Please try again.'); return; }
+        if(res.ok){ open(res.matched||raw); }                       // confident match
+        else if(res.suggestion){ pending=res.suggestion; suggNm.textContent=res.suggestion; sugg.hidden=false; }
+        else if(res.error==='no list'){ showError('The guest list is being set up. Please try again shortly, or message Thuto or Creven.'); }
+        else { showError('We could not find that name on the guest list. '
+          + 'Please check the spelling, or use your full name as it appears on your invitation.'); }
+      },
+      ()=>{ setChecking(false); showError('We could not reach the guest list just now. Please refresh, '
+        + 'or message Thuto or Creven and we will let you in.'); }
+    );
   }
 
   form.addEventListener('submit',e=>{ e.preventDefault(); attempt(); });
