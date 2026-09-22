@@ -46,10 +46,13 @@
    contains the decorative sprays without creating a scroll container. */
 html{scroll-behavior:smooth;}
 body{
-  background:var(--paper);
+  /* black satin silk — soft diagonal sheen, no red wash */
+  background:#070607;
   background-image:
-    radial-gradient(ellipse 130% 70% at 50% -8%, rgba(140,21,38,.12) 0%, transparent 62%),
-    radial-gradient(ellipse 110% 60% at 50% 104%, rgba(242,237,228,.10) 0%, transparent 62%);
+    linear-gradient(115deg, rgba(255,255,255,.065) 0%, transparent 27%, transparent 73%, rgba(255,255,255,.05) 100%),
+    linear-gradient(200deg, rgba(255,255,255,.04) 0%, transparent 35%, transparent 65%, rgba(255,255,255,.032) 100%),
+    radial-gradient(ellipse 120% 70% at 50% -6%, rgba(255,255,255,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 110% 60% at 50% 106%, rgba(255,255,255,.05) 0%, transparent 60%);
   background-attachment:fixed;
   color:var(--ink);
   font-family:'Cormorant Garamond',serif;
@@ -76,7 +79,7 @@ body{
 .aura{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
 .aura-1{
   top:-200px;left:-180px;width:560px;height:560px;
-  background:radial-gradient(circle,rgba(140,21,38,.18) 0%,transparent 62%);
+  background:radial-gradient(circle,rgba(255,255,255,.07) 0%,transparent 62%);
   animation:swell 20s ease-in-out infinite;
 }
 .aura-2{
@@ -96,13 +99,13 @@ body{
   will-change:transform,border-radius;
 }
 .morph-1{top:5%;left:-150px;width:360px;height:360px;
-  background:radial-gradient(circle,rgba(176,31,51,.55),transparent 68%);
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 68%);
   animation:blobMorph 17s ease-in-out infinite, blobDrift1 25s ease-in-out infinite;}
 .morph-2{bottom:4%;right:-165px;width:420px;height:420px;
-  background:radial-gradient(circle,rgba(216,57,75,.42),transparent 70%);
+  background:radial-gradient(circle,rgba(232,232,238,.08),transparent 70%);
   animation:blobMorph 23s ease-in-out infinite reverse, blobDrift2 30s ease-in-out infinite;}
 .morph-3{top:46%;left:34%;width:300px;height:300px;
-  background:radial-gradient(circle,rgba(140,21,38,.4),transparent 72%);
+  background:radial-gradient(circle,rgba(205,210,220,.07),transparent 72%);
   animation:blobMorph 20s ease-in-out infinite, blobDrift3 34s ease-in-out infinite;}
 @keyframes blobMorph{
   0%,100%{border-radius:42% 58% 63% 37% / 41% 44% 56% 59%;}
@@ -276,8 +279,8 @@ body{
   animation:nameGlow 6s ease-in-out infinite;
 }
 @keyframes nameGlow{
-  0%,100%{filter:drop-shadow(0 0 0 rgba(216,57,75,0));}
-  50%    {filter:drop-shadow(0 6px 26px rgba(216,57,75,.28));}
+  0%,100%{filter:drop-shadow(0 0 0 rgba(255,255,255,0));}
+  50%    {filter:drop-shadow(0 4px 22px rgba(255,255,255,.16));}
 }
 .name-line{display:block;overflow:visible;padding:0 4px;}
 .name-line > i{
@@ -849,9 +852,10 @@ footer > *:not(.foot-bouquet){position:relative;z-index:2;}
   display:flex;align-items:center;justify-content:center;
   padding:clamp(24px,6vw,48px);
   background:
-    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(140,21,38,.16) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(242,237,228,.12) 0%, transparent 60%),
-    #0A0708;
+    linear-gradient(115deg, rgba(255,255,255,.06) 0%, transparent 30%, transparent 70%, rgba(255,255,255,.045) 100%),
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(255,255,255,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 70% at 50% 110%, rgba(255,255,255,.05) 0%, transparent 60%),
+    #070607;
   transition:opacity .9s cubic-bezier(.16,1,.3,1);
 }
 #gate.unlocking{opacity:0;pointer-events:none;}
@@ -975,7 +979,7 @@ body.gated{overflow:hidden;}
 /* digital invitation letter */
 .letter{
   position:relative;border:1px solid var(--gold-hair);
-  background:linear-gradient(180deg,rgba(140,21,38,.10),transparent 58%),#0C0809;
+  background:linear-gradient(150deg,rgba(255,255,255,.07),transparent 44%),#0B0A0B;
   padding:46px 30px 42px;box-shadow:0 30px 70px -40px rgba(0,0,0,.9);
 }
 .letter::after{content:'';position:absolute;inset:9px;border:1px solid rgba(242,237,228,.08);pointer-events:none;}
@@ -1264,10 +1268,9 @@ body.gated{overflow:hidden;}
         <path d="M60 32c-9-13-17-19-27-19-12 0-21 8-21 19s9 19 21 19c10 0 18-6 27-19 9-13 17-19 27-19 12 0 21 8 21 19s-9 19-21 19c-10 0-18-6-27-19z"/>
       </svg>
       <p class="letter-eyebrow caps caps-sm">You're confirmed</p>
-      <p class="letter-dear">Dear <span id="letter-guest">Guest</span>,</p>
-      <p class="letter-intro caps caps-sm">Together with their families</p>
+      <p class="letter-dear">Dear <span id="letter-guest">Guest</span>, you have been invited to</p>
       <h3 class="letter-names">Creven Matonisa<br><span class="letter-amp">&amp;</span><br>Thuto Obuseng</h3>
-      <p class="letter-sub caps caps-sm">Wedding Celebration</p>
+      <p class="letter-sub caps caps-sm">Wedding Celebration<br>Together with their families</p>
       <div class="letter-rule"></div>
       <p class="letter-line"><span class="caps caps-sm">When</span><br>Saturday, 31<sup>st</sup> October 2026</p>
       <p class="letter-line"><span class="caps caps-sm">Where</span><br>Bulawayo, Zimbabwe</p>
@@ -1310,7 +1313,7 @@ const CONFIG = {
   // Every Confirm / Decline / "Actually I can make it" updates one row
   // per guest in your sheet, moving the name between Coming and Declined.
   // Leave '' and the site still works — it just won't record to the sheet.
-  sheetApi: 'https://script.google.com/macros/s/AKfycbzk4eIYrE3q_KJJSyKWeLxYKkFAb6CCo3ib_-2RiYu3dHUH1jPloGp7KwS3dGsbZamEHQ/exec',
+  sheetApi: 'https://script.google.com/macros/s/AKfycbyf7bPuw6m9lm5hfMWr0KeEibYM3-uOwBFEsHuUwznLXONdA34tZF2j5-fqGrmbJxVWpQ/exec',
 
   // Where the guest's "I'm coming" WhatsApp is addressed.
   // International format, digits only, no + and no spaces.
@@ -1335,12 +1338,12 @@ const CONFIG = {
   cardImage: 'invite-card.png',
   // The guest's name is stamped into the empty band between the "C | T"
   // monogram and "TOGETHER WITH THEIR FAMILIES", then downloaded with it.
-  cardNameYPct: 0.170,      // name baseline, as a fraction of card height (0–1)
-  cardNameSizePct: 0.050,   // name size as a fraction of card width
+  cardNameYPct: 0.198,      // name baseline, as a fraction of card height (0–1)
+  cardNameSizePct: 0.052,   // name size as a fraction of card width
   cardNameColor: '#F2EDE4', // ivory
-  cardSubText: 'you have been invited',
-  cardSubYPct: 0.206,       // sub-line baseline
-  cardSubSizePct: 0.021,
+  cardSubText: 'you have been invited to',
+  cardSubYPct: 0.232,       // sub-line baseline
+  cardSubSizePct: 0.020,
   cardSubColor: '#D8394B'   // red
 };
 
